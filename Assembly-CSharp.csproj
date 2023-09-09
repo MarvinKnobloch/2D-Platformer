@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{F14DCF88-936C-B5DA-4F2E-6CD5AF456108}</ProjectGuid>
+    <ProjectGuid>{4EDCDC54-0B27-56CC-652B-13195BCA97C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -65,6 +65,7 @@
     <Compile Include="Assets\Player\Globalcalls.cs" />
     <Compile Include="Assets\Player\Playerstatemachine.cs" />
     <Compile Include="Assets\Player\Playermovement.cs" />
+    <Compile Include="Assets\Puzzles\Platformonentermove.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />

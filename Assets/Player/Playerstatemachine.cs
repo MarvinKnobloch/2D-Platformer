@@ -113,7 +113,7 @@ public class Playerstatemachine : MonoBehaviour
                 playercollider.playergroundcheckair();
                 playermovement.playercheckforairstate();
                 playermovement.playerairdash();
-                playermovement.playerdoublejump();
+                //playermovement.playerdoublejump();
                 break;
             case States.Dash:
                 playermovement.playerdashstate();
