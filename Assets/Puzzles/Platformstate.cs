@@ -46,4 +46,16 @@ public class Platformstate : MonoBehaviour
             }
         }
     }
+    public void switchtored()
+    {
+        if (isactiv == true)
+        {
+            isactiv = false;
+            spriteRenderer.color = inactivcolor;
+            foreach (BoxCollider2D cols in boxcolliders)
+            {
+                cols.enabled = false;
+            }
+        }
+    }
 }

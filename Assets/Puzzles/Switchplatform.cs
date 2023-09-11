@@ -5,6 +5,7 @@ using UnityEngine;
 public class Switchplatform : MonoBehaviour
 {
     [SerializeField] private GameObject[] switchobjs;
+    [SerializeField] private bool switchboth;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -28,7 +29,8 @@ public class Switchplatform : MonoBehaviour
         {
             if (obj.TryGetComponent(out Platformstate platformstate))
             {
-                platformstate.switchplatform();
+                if (switchboth == true) platformstate.switchplatform();
+                else platformstate.switchtored();
             }
         }
     }
