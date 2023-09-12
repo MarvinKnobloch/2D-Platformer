@@ -8,19 +8,19 @@ public class Playercollider
 
     public void playergroundcheck()
     {
-        RaycastHit2D downwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 2f, 0, Vector2.down, 0.2f, psm.groundchecklayer);
+        RaycastHit2D downwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 2f, 0, psm.transform.up * -1, 0.2f, psm.groundchecklayer);
         if (downwardhit)
         {
             Debug.DrawRay(downwardhit.point, downwardhit.normal, Color.green);
             psm.groundcheck = true;
-            float downwardangle = Vector2.Angle(downwardhit.normal, Vector2.up);
+            float downwardangle = Vector2.Angle(downwardhit.normal, psm.transform.up);
             RaycastHit2D forwardhit;
             if (psm.faceright == true) forwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 2f, 0, Vector2.left, 0.1f, psm.groundchecklayer);
             else forwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 2f, 0, Vector2.right, 0.1f, psm.groundchecklayer);
             {
                 if (forwardhit)
                 {
-                    float forwardangle = Vector2.Angle(forwardhit.normal, Vector2.up);
+                    float forwardangle = Vector2.Angle(forwardhit.normal, psm.transform.up);
                     //Debug.Log(forwardangle);
                     if (forwardangle > psm.maxslopeangle)
                     {
@@ -78,7 +78,7 @@ public class Playercollider
     }
     public void playergroundcheckair()
     {
-        RaycastHit2D downwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, Vector2.down, 0.1f, psm.groundchecklayer);
+        RaycastHit2D downwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, psm.transform.up * -1, 0.1f, psm.groundchecklayer);
         if (downwardhit)
         {
             psm.groundcheck = true;
@@ -87,10 +87,10 @@ public class Playercollider
     }
     public void playerslidewall()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, Vector2.down, 0.2f, psm.groundchecklayer);
+        RaycastHit2D hit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, psm.transform.up * -1, 0.2f, psm.groundchecklayer);
         if (hit)
         {
-            float angle = Vector2.Angle(Vector2.up, hit.normal);
+            float angle = Vector2.Angle(psm.transform.up, hit.normal);
             if (angle < psm.maxslopeangle)
             {
                 psm.groundcheck = true;
@@ -106,19 +106,19 @@ public class Playercollider
     }
     public void playerinfrontofwall()
     {
-        RaycastHit2D downwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, Vector2.down, 0.2f, psm.groundchecklayer);
+        RaycastHit2D downwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, psm.transform.up * -1, 0.2f, psm.groundchecklayer);
         if (downwardhit)
         {
             psm.rb.velocity = Vector2.zero;
             psm.groundcheck = true;
-            float downwardangle = Vector2.Angle(Vector2.up, downwardhit.normal);
+            float downwardangle = Vector2.Angle(psm.transform.up, downwardhit.normal);
             RaycastHit2D forwardhit;
             if (psm.faceright == true) forwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, Vector2.left, 0.2f, psm.groundchecklayer);
             else forwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 1.9f, 0, Vector2.right, 0.2f, psm.groundchecklayer);
             {
                 if (forwardhit)
                 {
-                    float forwardangle = Vector2.Angle(Vector2.up, forwardhit.normal);
+                    float forwardangle = Vector2.Angle(psm.transform.up, forwardhit.normal);
                     if (forwardangle > psm.maxslopeangle)
                     {
                         if (downwardangle > psm.maxslopeangle)

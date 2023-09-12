@@ -16,7 +16,8 @@ public class Playermovement
         }
         else
         {
-            psm.playervelocity.Set(psm.move.x * psm.movementspeed, -0.5f);
+            if(psm.switchgravityactiv == false) psm.playervelocity.Set(psm.move.x * psm.movementspeed, -0.5f);
+            else psm.playervelocity.Set(psm.move.x * psm.movementspeed, 0.5f);
             psm.rb.velocity = psm.rb.velocity = psm.playervelocity;
         }
     }
@@ -42,7 +43,8 @@ public class Playermovement
     public void playerupwardsmomentum(float upwardsmomentum)
     {
         psm.rb.velocity = new Vector2(psm.rb.velocity.x, 0);
-        psm.rb.AddForce(Vector2.up * upwardsmomentum, ForceMode2D.Impulse);
+        if(psm.switchgravityactiv == false) psm.rb.AddForce(Vector2.up * upwardsmomentum, ForceMode2D.Impulse);
+        else psm.rb.AddForce(Vector2.up * upwardsmomentum * -1, ForceMode2D.Impulse);
     }
     public void playergroundintoair()
     {

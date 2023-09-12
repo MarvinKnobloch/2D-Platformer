@@ -42,9 +42,12 @@ public class Playerstatemachine : MonoBehaviour
     public PhysicsMaterial2D nofriction;
     public PhysicsMaterial2D friction;
 
+    public bool switchgravityactiv;
+
 
     private Playermovement playermovement = new Playermovement();
     private Playercollider playercollider = new Playercollider();
+    private Playergravityswitch playergravityswitch = new Playergravityswitch();
 
     public States state;
     public enum States
@@ -65,6 +68,8 @@ public class Playerstatemachine : MonoBehaviour
 
         playermovement.psm = this;
         playercollider.psm = this;
+        playergravityswitch.psm = this;
+       
     }
     private void OnEnable()
     {
@@ -101,6 +106,7 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playerflip();
                 playercollider.playergroundcheck();
                 playermovement.playercheckforgroundstate();
+                playergravityswitch.playerswitchgravity();
                 playermovement.playerdash();
                 playermovement.playergroundjump();
                 break;
@@ -112,6 +118,7 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playerflip();
                 playercollider.playergroundcheckair();
                 playermovement.playercheckforairstate();
+                playergravityswitch.playerswitchgravity();
                 playermovement.playerairdash();
                 //playermovement.playerdoublejump();
                 break;
@@ -142,7 +149,9 @@ public class Playerstatemachine : MonoBehaviour
         canjump = true;
         doublejump = true;
         state = States.Ground;
-        rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
+        if (switchgravityactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
+        else rb.gravityScale = groundgravityscale * -1;
+
     }
     public void groundintoairswitch()
     {
@@ -150,19 +159,22 @@ public class Playerstatemachine : MonoBehaviour
         switchtoairtime = 0;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
-        rb.gravityScale = airgravityscale;
+        if (switchgravityactiv == false) rb.gravityScale = airgravityscale;
+        else rb.gravityScale = airgravityscale * -1;
         state = States.Groundintoair;
     }
     public void switchtoairstate()
     {
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
-        rb.gravityScale = airgravityscale;
+        if (switchgravityactiv == false) rb.gravityScale = airgravityscale;
+        else rb.gravityScale = airgravityscale * -1;
         state = States.Air;
     }
     public void switchtoslidwall()
     {
-        rb.gravityScale = groundgravityscale;
+        if (switchgravityactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
+        else rb.gravityScale = groundgravityscale * -1;
         state = States.Slidewall;
         rb.velocity = Vector2.zero;
     }
