@@ -178,21 +178,4 @@ public class Playerstatemachine : MonoBehaviour
         state = States.Slidewall;
         rb.velocity = Vector2.zero;
     }
-    public void resetplayer()
-    {
-        canjump = false;
-        doublejump = false;
-        currentdashcount = maxdashcount;
-        rb.sharedMaterial = nofriction;
-        groundcheckcollider.sharedMaterial = nofriction;
-        if(switchgravityactiv == true)
-        {
-            transform.Rotate(180, 0, 0);
-            switchgravityactiv = false;
-            playergravityswitch.triggerplatformrotate();
-        }
-        rb.gravityScale = airgravityscale;
-        rb.velocity = Vector2.zero;
-        state = States.Air;
-    }
 }

@@ -18,9 +18,4 @@ public class Playergravityswitch
             platformrotate?.Invoke();
         }
     }
-    public void triggerplatformrotate()
-    {
-        platformrotate?.Invoke();
-
-    }
 }

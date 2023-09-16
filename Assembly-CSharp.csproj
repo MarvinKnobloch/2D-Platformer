@@ -62,14 +62,12 @@
     <Compile Include="Assets\Puzzles\Platformmove.cs" />
     <Compile Include="Assets\Player\Playercollider.cs" />
     <Compile Include="Assets\Puzzles\Switchplatform.cs" />
-    <Compile Include="Assets\Globalcalls.cs" />
+    <Compile Include="Assets\Player\Globalcalls.cs" />
     <Compile Include="Assets\Player\Playerstatemachine.cs" />
     <Compile Include="Assets\Player\Playergravityswitch.cs" />
     <Compile Include="Assets\Puzzles\Platformonentermove.cs" />
-    <Compile Include="Assets\Puzzles\Rotateplatform.cs" />
     <Compile Include="Assets\Player\Playermovement.cs" />
-    <Compile Include="Assets\Puzzles\Setresetpoint.cs" />
-    <Compile Include="Assets\Puzzles\Playerresetzone.cs" />
+    <Compile Include="Assets\Puzzles\Rotateplatform.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />
