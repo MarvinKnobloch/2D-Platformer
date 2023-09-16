@@ -66,8 +66,8 @@
     <Compile Include="Assets\Player\Playerstatemachine.cs" />
     <Compile Include="Assets\Player\Playergravityswitch.cs" />
     <Compile Include="Assets\Puzzles\Platformonentermove.cs" />
-    <Compile Include="Assets\Player\Playermovement.cs" />
     <Compile Include="Assets\Puzzles\Rotateplatform.cs" />
+    <Compile Include="Assets\Player\Playermovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />
