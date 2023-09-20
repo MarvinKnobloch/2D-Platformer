@@ -73,3 +73,15 @@ crashlytics-build.properties
 *.stamp
 *.hash
 *.txt
+*.meta
+*.prefab
+*.asset
+Library/Artifacts/0a/0a2572b86ca4de0338d070ead631539a
+Library/Artifacts/15/15d8b68ffc981731a9b958d969596019
+Library/Artifacts/37/378bbdbe3de16ed2d57477b238f64fb4
+Library/Artifacts/68/685000fba4fe5ffba623238460fea911
+Library/Artifacts/72/720eff34a79e2114ba4cafdda4457f49
+Library/Artifacts/b9/b9465865c5a8c0a620017487641d1a6c
+Library/Artifacts/c1/c18d5f460ad370a2219303c73f9d1b7a
+*.dwlt
+*.json

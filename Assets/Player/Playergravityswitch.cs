@@ -10,8 +10,10 @@ public class Playergravityswitch
 
     public void playerswitchgravity()
     {
-        if (psm.controlls.Player.Gravityswitch.WasPerformedThisFrame())
+        if (psm.controlls.Player.Gravityswitch.WasPerformedThisFrame() && Globalcalls.currentgravitystacks > 0)
         {
+            Globalcalls.currentgravitystacks--;
+            Cooldowns.instance.handlegravitystacks();
             psm.switchgravityactiv = !psm.switchgravityactiv;
             psm.transform.Rotate(180, 0, 0);
             psm.rb.gravityScale *= -1;

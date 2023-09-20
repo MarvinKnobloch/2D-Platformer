@@ -180,6 +180,8 @@ public class Playerstatemachine : MonoBehaviour
     }
     public void resetplayer()
     {
+        Globalcalls.currentgravitystacks = 0;
+        Cooldowns.instance.handlegravitystacks();
         canjump = false;
         doublejump = false;
         currentdashcount = maxdashcount;
