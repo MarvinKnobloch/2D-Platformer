@@ -14,7 +14,7 @@ public class Playergravityswitch
         {
             Globalcalls.currentgravitystacks--;
             Cooldowns.instance.handlegravitystacks();
-            psm.switchgravityactiv = !psm.switchgravityactiv;
+            psm.gravityswitchactiv = !psm.gravityswitchactiv;
             psm.transform.Rotate(180, 0, 0);
             psm.rb.gravityScale *= -1;
             platformrotate?.Invoke();

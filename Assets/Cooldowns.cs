@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Cooldowns : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Cooldowns : MonoBehaviour
 
     [SerializeField] private GameObject gravitystacksui;
     [SerializeField] private TextMeshProUGUI gravitystacks;
+    private Color gravityuicolor;
 
     private void Awake()
     {
@@ -21,6 +23,18 @@ public class Cooldowns : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        Globalcalls.currentgravitystacks = 0;
+        StartCoroutine("disableonawake");
+    }
+    
+    IEnumerator disableonawake()                    //damit bild und text geladen werden, sonst ensteht ein spike wenn das image das erste mal aktiviert wird
+    {
+        yield return new WaitForSeconds(0.03f);
+        gravityuicolor = gravitystacksui.GetComponent<Image>().color;
+        gravityuicolor.a = 1;
+        gravitystacksui.GetComponent<Image>().color = gravityuicolor;
+        if (Globalcalls.currentgravitystacks == 0) gravitystacksui.SetActive(false);
+
     }
     public void displaygravitystacks()
     {

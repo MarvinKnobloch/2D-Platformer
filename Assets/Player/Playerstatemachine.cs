@@ -19,6 +19,9 @@ public class Playerstatemachine : MonoBehaviour
     public float jumpheight;
     [NonSerialized] public bool canjump;
     [NonSerialized] public bool doublejump;
+    public bool isjumping;
+    public float jumptime;
+    public float maxjumptime;
     public float airgravityscale;
 
     public BoxCollider2D groundcheckcollider;
@@ -42,7 +45,7 @@ public class Playerstatemachine : MonoBehaviour
     public PhysicsMaterial2D nofriction;
     public PhysicsMaterial2D friction;
 
-    public bool switchgravityactiv;
+    public bool gravityswitchactiv;
 
 
     private Playermovement playermovement = new Playermovement();
@@ -111,11 +114,13 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playergroundjump();
                 break;
             case States.Groundintoair:
+                playermovement.controlljumpheight();
                 playermovement.playergroundintoair();
                 playermovement.playerairdash();
                 break;
             case States.Air:
                 playermovement.playerflip();
+                playermovement.controlljumpheight();
                 playercollider.playergroundcheckair();
                 playermovement.playercheckforairstate();
                 playergravityswitch.playerswitchgravity();
@@ -148,8 +153,9 @@ public class Playerstatemachine : MonoBehaviour
         currentdashcount = 0;
         canjump = true;
         doublejump = true;
+        isjumping = false;
         state = States.Ground;
-        if (switchgravityactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
+        if (gravityswitchactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
         else rb.gravityScale = groundgravityscale * -1;
 
     }
@@ -159,7 +165,7 @@ public class Playerstatemachine : MonoBehaviour
         switchtoairtime = 0;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
-        if (switchgravityactiv == false) rb.gravityScale = airgravityscale;
+        if (gravityswitchactiv == false) rb.gravityScale = airgravityscale;
         else rb.gravityScale = airgravityscale * -1;
         state = States.Groundintoair;
     }
@@ -167,13 +173,14 @@ public class Playerstatemachine : MonoBehaviour
     {
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
-        if (switchgravityactiv == false) rb.gravityScale = airgravityscale;
+        if (gravityswitchactiv == false) rb.gravityScale = airgravityscale;
         else rb.gravityScale = airgravityscale * -1;
         state = States.Air;
     }
     public void switchtoslidwall()
     {
-        if (switchgravityactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
+        isjumping = false;
+        if (gravityswitchactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
         else rb.gravityScale = groundgravityscale * -1;
         state = States.Slidewall;
         rb.velocity = Vector2.zero;
@@ -184,13 +191,14 @@ public class Playerstatemachine : MonoBehaviour
         Cooldowns.instance.handlegravitystacks();
         canjump = false;
         doublejump = false;
+        isjumping = false;
         currentdashcount = maxdashcount;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
-        if (switchgravityactiv == true)
+        if (gravityswitchactiv == true)
         {
             transform.Rotate(180, 0, 0);
-            switchgravityactiv = false;
+            gravityswitchactiv = false;
             playergravityswitch.triggerplatformrotate();
         }
         rb.gravityScale = airgravityscale;

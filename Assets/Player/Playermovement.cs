@@ -16,9 +16,10 @@ public class Playermovement
         }
         else
         {
-            if(psm.switchgravityactiv == false) psm.playervelocity.Set(psm.move.x * psm.movementspeed, -0.5f);
+            if(psm.gravityswitchactiv == false) psm.playervelocity.Set(psm.move.x * psm.movementspeed, -0.5f);
             else psm.playervelocity.Set(psm.move.x * psm.movementspeed, 0.5f);
-            psm.rb.velocity = psm.rb.velocity = psm.playervelocity;
+            //psm.rb.velocity = psm.rb.velocity = psm.playervelocity;
+            psm.rb.velocity = psm.playervelocity;
         }
     }
     public void playerairmovement()
@@ -35,15 +36,50 @@ public class Playermovement
         if (psm.controlls.Player.Jump.WasPerformedThisFrame() && psm.canjump == true)
         {
             psm.canjump = false;
+            psm.isjumping = true;
+            psm.jumptime = psm.maxjumptime;
             psm.groundintoairswitch();
             playerupwardsmomentum(psm.jumpheight);
         }
-
+    }
+    public void playerdoublejump()
+    {
+        if (psm.controlls.Player.Jump.WasPerformedThisFrame() && psm.doublejump == true)
+        {
+            Globalcalls.jumpcantriggerswitch = true;
+            psm.doublejump = false;
+            psm.isjumping = true;
+            psm.jumptime = psm.maxjumptime;
+            playerupwardsmomentum(psm.jumpheight);
+        }
+    }
+    public void controlljumpheight()
+    {
+        if(psm.isjumping == true)
+        {
+            psm.jumptime -= Time.deltaTime;
+            if (psm.jumptime < 0)
+            {
+                psm.isjumping = false;
+            }
+            if (psm.controlls.Player.Jump.WasReleasedThisFrame())
+            {
+                psm.isjumping = false;
+                if (psm.gravityswitchactiv == false)
+                {
+                    if (psm.rb.velocity.y > 0) psm.rb.velocity = new Vector2(psm.rb.velocity.x, psm.rb.velocity.y * 0.5f);
+                }
+                else
+                {
+                    if (psm.rb.velocity.y < 0) psm.rb.velocity = new Vector2(psm.rb.velocity.x, psm.rb.velocity.y * 0.5f);
+                }             
+            }
+        }
     }
     public void playerupwardsmomentum(float upwardsmomentum)
     {
         psm.rb.velocity = new Vector2(psm.rb.velocity.x, 0);
-        if(psm.switchgravityactiv == false) psm.rb.AddForce(Vector2.up * upwardsmomentum, ForceMode2D.Impulse);
+        if(psm.gravityswitchactiv == false) psm.rb.AddForce(Vector2.up * upwardsmomentum, ForceMode2D.Impulse);
         else psm.rb.AddForce(Vector2.up * upwardsmomentum * -1, ForceMode2D.Impulse);
     }
     public void playergroundintoair()
@@ -61,15 +97,7 @@ public class Playermovement
             psm.switchtogroundstate();
         }
     }
-    public void playerdoublejump()
-    {
-        if (psm.controlls.Player.Jump.WasPerformedThisFrame() && psm.doublejump == true)
-        {
-            Globalcalls.jumpcantriggerswitch = true;
-            psm.doublejump = false;
-            playerupwardsmomentum(psm.jumpheight);
-        }
-    }
+
     public void playerdash()
     {
         if (psm.controlls.Player.Dash.WasPerformedThisFrame())
@@ -87,6 +115,7 @@ public class Playermovement
     }
     private void startdash()
     {
+        psm.isjumping = false;
         psm.rb.velocity = new Vector2(0, 0);
         psm.rb.sharedMaterial = psm.nofriction;
         psm.groundcheckcollider.sharedMaterial = psm.nofriction;
