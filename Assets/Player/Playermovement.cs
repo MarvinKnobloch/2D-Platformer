@@ -37,7 +37,7 @@ public class Playermovement
         {
             psm.canjump = false;
             psm.isjumping = true;
-            psm.jumptime = psm.maxjumptime;
+            psm.jumptime = psm.maxshortjumptime;
             psm.groundintoairswitch();
             playerupwardsmomentum(psm.jumpheight);
         }
@@ -49,7 +49,7 @@ public class Playermovement
             Globalcalls.jumpcantriggerswitch = true;
             psm.doublejump = false;
             psm.isjumping = true;
-            psm.jumptime = psm.maxjumptime;
+            psm.jumptime = psm.maxshortjumptime;
             playerupwardsmomentum(psm.jumpheight);
         }
     }
@@ -57,11 +57,6 @@ public class Playermovement
     {
         if(psm.isjumping == true)
         {
-            psm.jumptime -= Time.deltaTime;
-            if (psm.jumptime < 0)
-            {
-                psm.isjumping = false;
-            }
             if (psm.controlls.Player.Jump.WasReleasedThisFrame())
             {
                 psm.isjumping = false;
@@ -72,7 +67,12 @@ public class Playermovement
                 else
                 {
                     if (psm.rb.velocity.y < 0) psm.rb.velocity = new Vector2(psm.rb.velocity.x, psm.rb.velocity.y * 0.5f);
-                }             
+                }
+            }
+            psm.jumptime -= Time.deltaTime;
+            if (psm.jumptime < 0)
+            {
+                psm.isjumping = false;
             }
         }
     }

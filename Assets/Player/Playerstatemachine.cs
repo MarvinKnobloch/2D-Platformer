@@ -21,7 +21,7 @@ public class Playerstatemachine : MonoBehaviour
     [NonSerialized] public bool doublejump;
     public bool isjumping;
     public float jumptime;
-    public float maxjumptime;
+    public float maxshortjumptime;  // 0.13f sollte ganz ok sein
     public float airgravityscale;
 
     public BoxCollider2D groundcheckcollider;
@@ -45,12 +45,17 @@ public class Playerstatemachine : MonoBehaviour
     public PhysicsMaterial2D nofriction;
     public PhysicsMaterial2D friction;
 
+    //hook
+    [NonSerialized] public GameObject hooktarget;
+    public Vector3 hookpositon;
+
     public bool gravityswitchactiv;
 
 
     private Playermovement playermovement = new Playermovement();
     private Playercollider playercollider = new Playercollider();
     private Playergravityswitch playergravityswitch = new Playergravityswitch();
+    private Playerabilities playerabilities = new Playerabilities();
 
     public States state;
     public enum States
@@ -59,6 +64,7 @@ public class Playerstatemachine : MonoBehaviour
         Groundintoair,
         Air,
         Dash,
+        Hook,
         Slidewall,
         Infrontofwall,
     }
@@ -72,6 +78,7 @@ public class Playerstatemachine : MonoBehaviour
         playermovement.psm = this;
         playercollider.psm = this;
         playergravityswitch.psm = this;
+        playerabilities.psm = this;
        
     }
     private void OnEnable()
@@ -94,6 +101,8 @@ public class Playerstatemachine : MonoBehaviour
                 break;
             case States.Dash:
                 break;
+            case States.Hook:
+                break;
             case States.Slidewall:
                 break;
             case States.Infrontofwall:
@@ -109,6 +118,7 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playerflip();
                 playercollider.playergroundcheck();
                 playermovement.playercheckforgroundstate();
+                playerabilities.playercheckforhook();
                 playergravityswitch.playerswitchgravity();
                 playermovement.playerdash();
                 playermovement.playergroundjump();
@@ -116,6 +126,7 @@ public class Playerstatemachine : MonoBehaviour
             case States.Groundintoair:
                 playermovement.controlljumpheight();
                 playermovement.playergroundintoair();
+                playerabilities.playercheckforhook();
                 playermovement.playerairdash();
                 break;
             case States.Air:
@@ -123,12 +134,15 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.controlljumpheight();
                 playercollider.playergroundcheckair();
                 playermovement.playercheckforairstate();
+                playerabilities.playercheckforhook();
                 playergravityswitch.playerswitchgravity();
                 playermovement.playerairdash();
                 //playermovement.playerdoublejump();
                 break;
             case States.Dash:
                 playermovement.playerdashstate();
+                break;
+            case States.Hook:
                 break;
             case States.Slidewall:
                 playercollider.playerslidewall();

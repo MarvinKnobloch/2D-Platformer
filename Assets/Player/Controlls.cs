@@ -62,6 +62,15 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Hook"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5cd0e15-bc67-4f21-838f-f6614aa4656f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -75,28 +84,6 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""e2062cb9-1b15-46a2-838c-2f8d72a0bdd9"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""320bffee-a40b-4347-ac70-c210eb8bc73a"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
@@ -150,6 +137,17 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Gravityswitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f832a158-405d-41fb-b733-10ec66dffbd3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -225,6 +223,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Gravityswitch = m_Player.FindAction("Gravityswitch", throwIfNotFound: true);
+        m_Player_Hook = m_Player.FindAction("Hook", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +287,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Gravityswitch;
+    private readonly InputAction m_Player_Hook;
     public struct PlayerActions
     {
         private @Controlls m_Wrapper;
@@ -296,6 +296,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Gravityswitch => m_Wrapper.m_Player_Gravityswitch;
+        public InputAction @Hook => m_Wrapper.m_Player_Hook;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -317,6 +318,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Gravityswitch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGravityswitch;
                 @Gravityswitch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGravityswitch;
                 @Gravityswitch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGravityswitch;
+                @Hook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
+                @Hook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
+                @Hook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -333,6 +337,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Gravityswitch.started += instance.OnGravityswitch;
                 @Gravityswitch.performed += instance.OnGravityswitch;
                 @Gravityswitch.canceled += instance.OnGravityswitch;
+                @Hook.started += instance.OnHook;
+                @Hook.performed += instance.OnHook;
+                @Hook.canceled += instance.OnHook;
             }
         }
     }
@@ -388,5 +395,6 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnGravityswitch(InputAction.CallbackContext context);
+        void OnHook(InputAction.CallbackContext context);
     }
 }
