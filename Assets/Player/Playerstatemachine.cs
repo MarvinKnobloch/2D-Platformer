@@ -46,8 +46,15 @@ public class Playerstatemachine : MonoBehaviour
     public PhysicsMaterial2D friction;
 
     //hook
+    public bool inhookstate;
     [NonSerialized] public GameObject hooktarget;
-    public Vector3 hookpositon;
+     public Vector3 hookstartposition;
+     public Vector3 hookendposition;
+    [NonSerialized] public float hookstarttime;
+    public float flathookduration;
+    public float distancespeedmultiplier;
+    public float hookdistancetoobject;
+    public float hookradius;
 
     public bool gravityswitchactiv;
 
@@ -102,6 +109,7 @@ public class Playerstatemachine : MonoBehaviour
             case States.Dash:
                 break;
             case States.Hook:
+                playerabilities.movetohookposition();
                 break;
             case States.Slidewall:
                 break;
@@ -206,6 +214,7 @@ public class Playerstatemachine : MonoBehaviour
         canjump = false;
         doublejump = false;
         isjumping = false;
+        inhookstate = false;
         currentdashcount = maxdashcount;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
