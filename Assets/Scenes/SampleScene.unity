@@ -4044,6 +4044,7 @@ MonoBehaviour:
   distancespeedmultiplier: 0.02
   hookdistancetoobject: 3
   hookradius: -6
+  hookreleaseforce: 15
   gravityswitchactiv: 0
   state: 0
 --- !u!50 &994568017

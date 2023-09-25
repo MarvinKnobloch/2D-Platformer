@@ -48,13 +48,16 @@ public class Playerstatemachine : MonoBehaviour
     //hook
     public bool inhookstate;
     [NonSerialized] public GameObject hooktarget;
-     public Vector3 hookstartposition;
-     public Vector3 hookendposition;
+    [NonSerialized] public Vector3 hookstartposition;
+    [NonSerialized] public Vector3 hookendposition;
     [NonSerialized] public float hookstarttime;
     public float flathookduration;
     public float distancespeedmultiplier;
-    public float hookdistancetoobject;
+    [NonSerialized] public float hookdistancetoobject;
     public float hookradius;
+    public float hookreleaseforce;
+    public float xvelocityafterhook;
+
 
     public bool gravityswitchactiv;
 
@@ -72,6 +75,7 @@ public class Playerstatemachine : MonoBehaviour
         Air,
         Dash,
         Hook,
+        Hookrelease,
         Slidewall,
         Infrontofwall,
     }
@@ -110,6 +114,9 @@ public class Playerstatemachine : MonoBehaviour
                 break;
             case States.Hook:
                 playerabilities.movetohookposition();
+                break;
+            case States.Hookrelease:
+                playerabilities.hookreleasemovement();
                 break;
             case States.Slidewall:
                 break;
@@ -151,6 +158,13 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playerdashstate();
                 break;
             case States.Hook:
+                break;
+            case States.Hookrelease:
+                playermovement.playerflip();
+                playercollider.playergroundcheckair();
+                playermovement.playercheckforairstate();
+                playerabilities.playercheckforhook();
+                playermovement.playerairdash();
                 break;
             case States.Slidewall:
                 playercollider.playerslidewall();

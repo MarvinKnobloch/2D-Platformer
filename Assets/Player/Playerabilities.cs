@@ -8,6 +8,7 @@ public class Playerabilities
     private float currentclosestdistance;
     private float hookmaxdistance = 20;
     private float playerangle;
+    private Quaternion hookangle;
     private bool playerisonleftsideofhookobject;
     private bool playerisrightofhookendposition;
 
@@ -42,6 +43,8 @@ public class Playerabilities
     }
     private void hookplayer()
     {
+        //Hookobject.hookobjects.Remove(psm.hooktarget);
+        //psm.hooktarget.GetComponent<SpriteRenderer>().color = Color.red;
         psm.inhookstate = true;
         psm.hookstartposition = psm.transform.position;
         psm.hookstarttime = 0;
@@ -50,8 +53,9 @@ public class Playerabilities
         if (psm.transform.position.x < psm.hooktarget.transform.position.x)
         {
             Vector3 angleposition = psm.hooktarget.transform.position - psm.transform.position;
-            playerangle = Vector2.Angle(angleposition, Vector2.up);
-            Quaternion hookangle = Quaternion.Euler(0, 0, 60 - playerangle);
+            playerangle = 70 - Vector2.Angle(angleposition, Vector2.up);
+            hookangle = Quaternion.Euler(0, 0, playerangle);
+            psm.hookdistancetoobject = Vector3.Distance(psm.hooktarget.transform.position, psm.transform.position) * 1f;
             psm.hookendposition = hookangle * Vector2.up * psm.hookdistancetoobject;
             psm.hookendposition += psm.hooktarget.transform.position;
             playerisonleftsideofhookobject = true;
@@ -64,8 +68,8 @@ public class Playerabilities
         else
         {
             Vector3 angleposition = psm.hooktarget.transform.position - psm.transform.position;
-            playerangle = Vector2.Angle(angleposition, Vector2.up);
-            Quaternion hookangle = Quaternion.Euler(0, 0, playerangle - 60);
+            playerangle = Vector2.Angle(angleposition, Vector2.up) - 70;
+            hookangle = Quaternion.Euler(0, 0, playerangle);
             psm.hookendposition = hookangle * Vector2.up * psm.hookdistancetoobject;
             psm.hookendposition += psm.hooktarget.transform.position;
             playerisonleftsideofhookobject = false;
@@ -102,13 +106,57 @@ public class Playerabilities
         psm.hookstarttime += Time.deltaTime;
         float fracComplete = psm.hookstarttime / (psm.flathookduration + currentclosestdistance * psm.distancespeedmultiplier);
 
+        Debug.Log(psm.rb.velocity);
         psm.rb.position = Vector3.Slerp(startRelcenter, endRelcenter, fracComplete) + center;
-        //psm.transform.position = newposi;
-        //psm.rb.position = Vector3.MoveTowards(psm.transform.position, newposi, 30 * Time.deltaTime);
-        if(Vector3.Distance(psm.transform.position, psm.hookendposition) < 0.3f)
+        if(Vector3.Distance(psm.transform.position, psm.hookendposition) < 0.1f)
         {
+            //playerangle *= Mathf.Deg2Rad;
+            //float xComponent = Mathf.Cos(playerangle) * psm.hookreleaseforce;
+            //float zComponent = Mathf.Sin(playerangle) * psm.hookreleaseforce;
+            //Vector3 forceApplied = new Vector3(xComponent, 0, zComponent);
+            //psm.rb.AddForce(forceApplied, ForceMode2D.Impulse);
+
+            //Vector3 tpoint = psm.transform.position + Quaternion.Euler(0, 0, 100) * Vector2.up * 1;
+            //psm.rb.AddForce(tpoint * psm.hookreleaseforce, ForceMode2D.Impulse);
+
+
+            Vector3 direction;
+            if (playerisonleftsideofhookobject == true) direction = Quaternion.AngleAxis(playerangle - 70, Vector3.forward) * Vector3.up;
+            else direction = Quaternion.AngleAxis(playerangle + 70, Vector3.forward) * Vector3.up;
+            psm.rb.AddForce(direction * psm.hookreleaseforce, ForceMode2D.Impulse);
+            psm.xvelocityafterhook = psm.rb.velocity.x;
+
+            psm.rb.gravityScale = 2;
             psm.inhookstate = false;
-            psm.switchtoairstate();
+            psm.state = Playerstatemachine.States.Hookrelease;
         }
+    }
+    public void hookreleasemovement()
+    {
+        if(playerisonleftsideofhookobject == true)
+        {
+            if (psm.xvelocityafterhook > 0.2f)
+            {
+                psm.xvelocityafterhook -= psm.xvelocityafterhook * 0.05f;
+                psm.rb.velocity = new Vector2((psm.move.x * (psm.movementspeed * 0.8f)) + psm.xvelocityafterhook, psm.rb.velocity.y);
+            }
+            else
+            {
+                psm.switchtoairstate();
+            }
+        }
+        else
+        {
+            if (psm.xvelocityafterhook < -0.2f)
+            {
+                psm.xvelocityafterhook -= psm.xvelocityafterhook * 0.05f;
+                psm.rb.velocity = new Vector2((psm.move.x * (psm.movementspeed * 0.8f)) + psm.xvelocityafterhook, psm.rb.velocity.y);
+            }
+            else
+            {
+                psm.switchtoairstate();
+            }
+        }
+
     }
 }
