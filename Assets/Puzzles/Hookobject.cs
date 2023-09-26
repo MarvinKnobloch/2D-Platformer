@@ -6,6 +6,7 @@ public class Hookobject : MonoBehaviour
 {
     public static List<GameObject> hookobjects = new List<GameObject>();
     private SpriteRenderer spriteRenderer;
+    private float reactivatetimer;
 
     private void Awake()
     {
@@ -17,6 +18,23 @@ public class Hookobject : MonoBehaviour
         {
             hookobjects.Add(gameObject);
             spriteRenderer.color = Color.green;
+            reactivatetimer = 0;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if(hookobjects.Contains(gameObject) == false)
+            {
+                reactivatetimer += Time.deltaTime;
+                if(reactivatetimer > 1.4f)
+                {
+                    hookobjects.Add(gameObject);
+                    spriteRenderer.color = Color.green;
+                    reactivatetimer = 0;
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

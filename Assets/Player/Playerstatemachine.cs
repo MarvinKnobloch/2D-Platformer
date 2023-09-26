@@ -54,9 +54,10 @@ public class Playerstatemachine : MonoBehaviour
     public float flathookduration;
     public float distancespeedmultiplier;
     [NonSerialized] public float hookdistancetoobject;
+    public float maxhookdistanceradius;
     public float hookradius;
     public float hookreleaseforce;
-    public float xvelocityafterhook;
+    [NonSerialized] public float xvelocityafterhook;
 
 
     public bool gravityswitchactiv;
