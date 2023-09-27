@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class Playerstatemachine : MonoBehaviour
 {
     [NonSerialized] public Controlls controlls;
+    public CinemachineConfiner cinemachineConfiner;
+
     [NonSerialized] public Rigidbody2D rb;
 
     [NonSerialized] public Vector2 move;
@@ -59,14 +62,22 @@ public class Playerstatemachine : MonoBehaviour
     public float hookreleaseforce;
     [NonSerialized] public float xvelocityafterhook;
 
+    //memorie
+    public bool memoryisrunning;
+    [NonSerialized] public Vector3 memoryposition;
+    [NonSerialized] public Vector2 memoryvelocity;
+    public float memorymaxusetime;
+    public GameObject playermemoryimage;
+    public Collider2D memorycamera;
+    public Memorytimer memorycdobject;
 
     public bool gravityswitchactiv;
-
 
     private Playermovement playermovement = new Playermovement();
     private Playercollider playercollider = new Playercollider();
     private Playergravityswitch playergravityswitch = new Playergravityswitch();
-    private Playerabilities playerabilities = new Playerabilities();
+    private Playerhook playerhook = new Playerhook();
+    private Playermemories playermemories = new Playermemories();
 
     public States state;
     public enum States
@@ -90,7 +101,10 @@ public class Playerstatemachine : MonoBehaviour
         playermovement.psm = this;
         playercollider.psm = this;
         playergravityswitch.psm = this;
-        playerabilities.psm = this;
+        playerhook.psm = this;
+        playermemories.psm = this;
+
+        Globalcalls.playeresetpoint = transform.position;
        
     }
     private void OnEnable()
@@ -114,10 +128,10 @@ public class Playerstatemachine : MonoBehaviour
             case States.Dash:
                 break;
             case States.Hook:
-                playerabilities.movetohookposition();
+                playerhook.movetohookposition();
                 break;
             case States.Hookrelease:
-                playerabilities.hookreleasemovement();
+                playerhook.hookreleasemovement();
                 break;
             case States.Slidewall:
                 break;
@@ -134,15 +148,17 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playerflip();
                 playercollider.playergroundcheck();
                 playermovement.playercheckforgroundstate();
-                playerabilities.playercheckforhook();
+                playerhook.playercheckforhook();
                 playergravityswitch.playerswitchgravity();
+                playermemories.playerplacememory();
                 playermovement.playerdash();
                 playermovement.playergroundjump();
                 break;
             case States.Groundintoair:
                 playermovement.controlljumpheight();
                 playermovement.playergroundintoair();
-                playerabilities.playercheckforhook();
+                playerhook.playercheckforhook();
+                playermemories.playerplacememory();
                 playermovement.playerairdash();
                 break;
             case States.Air:
@@ -150,8 +166,9 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.controlljumpheight();
                 playercollider.playergroundcheckair();
                 playermovement.playercheckforairstate();
-                playerabilities.playercheckforhook();
+                playerhook.playercheckforhook();
                 playergravityswitch.playerswitchgravity();
+                playermemories.playerplacememory();
                 playermovement.playerairdash();
                 //playermovement.playerdoublejump();
                 break;
@@ -164,7 +181,8 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playerflip();
                 playercollider.playergroundcheckair();
                 playermovement.playercheckforairstate();
-                playerabilities.playercheckforhook();
+                playerhook.playercheckforhook();
+                playermemories.playerplacememory();
                 playermovement.playerairdash();
                 break;
             case States.Slidewall:
@@ -174,6 +192,8 @@ public class Playerstatemachine : MonoBehaviour
             case States.Infrontofwall:
                 playermovement.playerflip();
                 playercollider.playerinfrontofwall();
+                playerhook.playercheckforhook();
+                playermemories.playerplacememory();
                 playermovement.playerdash();
                 playermovement.playergroundjump();
                 break;
@@ -226,10 +246,15 @@ public class Playerstatemachine : MonoBehaviour
     {
         Globalcalls.currentgravitystacks = 0;
         Cooldowns.instance.handlegravitystacks();
+        Globalcalls.currentmemorystacks = 0;
+        Cooldowns.instance.handlememorystacks();
+        memorycdobject.disablecd();                 //called endmemorietimer
+
         canjump = false;
         doublejump = false;
         isjumping = false;
         inhookstate = false;
+        playermemoryimage.SetActive(false);
         currentdashcount = maxdashcount;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
@@ -242,5 +267,10 @@ public class Playerstatemachine : MonoBehaviour
         rb.gravityScale = airgravityscale;
         rb.velocity = Vector2.zero;
         state = States.Air;
+    }
+    public void endmemorytimer()
+    {
+        memoryisrunning = false;
+        playermemoryimage.SetActive(false);
     }
 }

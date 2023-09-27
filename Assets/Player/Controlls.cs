@@ -71,6 +71,15 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Memorie"",
+                    ""type"": ""Button"",
+                    ""id"": ""a553f580-09e7-4128-b9ac-60804af7a479"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -150,6 +159,17 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""action"": ""Hook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8d07136-6bf7-4385-9071-e878e6186641"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Memorie"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -224,6 +244,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Gravityswitch = m_Player.FindAction("Gravityswitch", throwIfNotFound: true);
         m_Player_Hook = m_Player.FindAction("Hook", throwIfNotFound: true);
+        m_Player_Memorie = m_Player.FindAction("Memorie", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -288,6 +309,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Gravityswitch;
     private readonly InputAction m_Player_Hook;
+    private readonly InputAction m_Player_Memorie;
     public struct PlayerActions
     {
         private @Controlls m_Wrapper;
@@ -297,6 +319,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Gravityswitch => m_Wrapper.m_Player_Gravityswitch;
         public InputAction @Hook => m_Wrapper.m_Player_Hook;
+        public InputAction @Memorie => m_Wrapper.m_Player_Memorie;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -321,6 +344,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Hook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
                 @Hook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
                 @Hook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
+                @Memorie.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMemorie;
+                @Memorie.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMemorie;
+                @Memorie.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMemorie;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -340,6 +366,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Hook.started += instance.OnHook;
                 @Hook.performed += instance.OnHook;
                 @Hook.canceled += instance.OnHook;
+                @Memorie.started += instance.OnMemorie;
+                @Memorie.performed += instance.OnMemorie;
+                @Memorie.canceled += instance.OnMemorie;
             }
         }
     }
@@ -396,5 +425,6 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnGravityswitch(InputAction.CallbackContext context);
         void OnHook(InputAction.CallbackContext context);
+        void OnMemorie(InputAction.CallbackContext context);
     }
 }

@@ -12,6 +12,10 @@ public class Cooldowns : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gravitystacks;
     private Color gravityuicolor;
 
+    [SerializeField] private GameObject memoriestacksui;
+    [SerializeField] private TextMeshProUGUI memoriestacks;
+    private Color memorieuicolor;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,6 +39,11 @@ public class Cooldowns : MonoBehaviour
         gravitystacksui.GetComponent<Image>().color = gravityuicolor;
         if (Globalcalls.currentgravitystacks == 0) gravitystacksui.SetActive(false);
 
+        memorieuicolor = memoriestacksui.GetComponent<Image>().color;
+        memorieuicolor.a = 1;
+        memoriestacksui.GetComponent<Image>().color = memorieuicolor;
+        if (Globalcalls.currentmemorystacks == 0) memoriestacksui.SetActive(false);
+
     }
     public void displaygravitystacks()
     {
@@ -45,5 +54,16 @@ public class Cooldowns : MonoBehaviour
     {
         if (Globalcalls.currentgravitystacks == 0) gravitystacksui.SetActive(false);
         else gravitystacks.text = Globalcalls.currentgravitystacks.ToString();
+    }
+
+    public void displaymemoriestacks()
+    {
+        memoriestacksui.SetActive(true);
+        memoriestacks.text = Globalcalls.currentmemorystacks.ToString();
+    }
+    public void handlememorystacks()
+    {
+        if (Globalcalls.currentmemorystacks == 0) memoriestacksui.SetActive(false);
+        else memoriestacks.text = Globalcalls.currentmemorystacks.ToString();
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Playerabilities
+public class Playerhook
 {
     public Playerstatemachine psm;
     private float currentclosestdistance;
@@ -11,7 +11,6 @@ public class Playerabilities
     private Quaternion hookangle;
     private bool playerisonleftsideofhookobject;
     private bool playerisrightofhookendposition;
-    private float hooktime;
 
     public void playercheckforhook()
     {
