@@ -17,6 +17,7 @@ public class Playermemories
                 psm.memoryposition = psm.transform.position;
                 psm.memoryvelocity = psm.rb.velocity;
                 psm.playermemoryimage.transform.position = psm.transform.position;
+                psm.playermemoryimage.transform.rotation = psm.transform.rotation;
                 psm.playermemoryimage.SetActive(true);
                 psm.memorycdobject.transform.parent.gameObject.SetActive(true);
                 psm.memorycamera = psm.cinemachineConfiner.m_BoundingShape2D;

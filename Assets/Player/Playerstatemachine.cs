@@ -182,6 +182,7 @@ public class Playerstatemachine : MonoBehaviour
                 playercollider.playergroundcheckair();
                 playermovement.playercheckforairstate();
                 playerhook.playercheckforhook();
+                playergravityswitch.playerswitchgravity();
                 playermemories.playerplacememory();
                 playermovement.playerairdash();
                 break;
@@ -193,6 +194,7 @@ public class Playerstatemachine : MonoBehaviour
                 playermovement.playerflip();
                 playercollider.playerinfrontofwall();
                 playerhook.playercheckforhook();
+                playergravityswitch.playerswitchgravity();
                 playermemories.playerplacememory();
                 playermovement.playerdash();
                 playermovement.playergroundjump();
@@ -248,7 +250,7 @@ public class Playerstatemachine : MonoBehaviour
         Cooldowns.instance.handlegravitystacks();
         Globalcalls.currentmemorystacks = 0;
         Cooldowns.instance.handlememorystacks();
-        memorycdobject.disablecd();                 //called endmemorietimer
+        if(memorycdobject.transform.parent.gameObject.activeSelf == true) memorycdobject.disablecd();                 //called endmemorietimer
 
         canjump = false;
         doublejump = false;
