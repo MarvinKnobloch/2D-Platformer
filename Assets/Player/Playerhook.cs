@@ -14,16 +14,19 @@ public class Playerhook
     private bool playerisonleftsideofhookobject;
     private bool playerisrightofhookendposition;
 
+    private bool addvelocity;
+
     public void playercheckforhook()
     {
         if (psm.controlls.Player.Hook.WasPerformedThisFrame() && psm.inhookstate == false)
         {
-            if(Hookobject.hookobjects.Count > 0)
+            if (Hookobject.hookobjects.Count > 0)
             {
                 checkforclosesthook();
-                if(currentclosestdistance < hookmaxdistance)
+                if (currentclosestdistance < hookmaxdistance)
                 {
                     hookplayer();
+                    addvelocity = true;
                     psm.state = Playerstatemachine.States.Hook;
                 }
             }
@@ -39,7 +42,7 @@ public class Playerhook
             if (currentclosestdistance > objectdistance)
             {
                 currentclosestdistance = objectdistance;
-                psm.hooktarget = Hookobject.hookobjects[i];                
+                psm.hooktarget = Hookobject.hookobjects[i];
             }
         }
     }
@@ -57,14 +60,14 @@ public class Playerhook
             if (psm.gravityswitchactiv == false)
             {
                 angleposition = psm.hooktarget.transform.position - psm.transform.position;
-                playerangle = 70 - Vector2.Angle(angleposition, Vector2.up);
+                playerangle = 90 - psm.hookangle - Vector2.Angle(angleposition, Vector2.up);
                 hookplayernormalgravity();
             }
-            else 
+            else
             {
                 angleposition = psm.hooktarget.transform.position - psm.transform.position;
-                playerangle = 110 - Vector2.Angle(angleposition, Vector2.up);
-                hookplayerreversegravity(); 
+                playerangle = 90 + psm.hookangle - Vector2.Angle(angleposition, Vector2.up);
+                hookplayerreversegravity();
             }
 
             psm.hookendposition += psm.hooktarget.transform.position;
@@ -80,13 +83,13 @@ public class Playerhook
             if (psm.gravityswitchactiv == false)
             {
                 angleposition = psm.hooktarget.transform.position - psm.transform.position;
-                playerangle = Vector2.Angle(angleposition, Vector2.up) - 70;
+                playerangle = Vector2.Angle(angleposition, Vector2.up) - (90 - psm.hookangle);
                 hookplayernormalgravity();
             }
             else
             {
                 angleposition = psm.hooktarget.transform.position - psm.transform.position;
-                playerangle = Vector2.Angle(angleposition, Vector2.up) - 110;
+                playerangle = Vector2.Angle(angleposition, Vector2.up) - (90 + psm.hookangle);
                 hookplayerreversegravity();
             }
 
@@ -115,70 +118,78 @@ public class Playerhook
     }
     public void movetohookposition()
     {
-        Vector3 center = (psm.hookstartposition + psm.hookendposition) * 0.5f;
-        if(playerisonleftsideofhookobject == true)
-        {
-            if (psm.gravityswitchactiv == false)
-            {
-                if (playerisrightofhookendposition == true) center -= multipleradius(1);
-                else center -= multipleradius(-1);
-            }
-            else
-            {
-                if (playerisrightofhookendposition == true) center -= multipleradius(-1);
-                else center -= multipleradius(1);
-            }
-        }
-        else
-        {
-            if (psm.gravityswitchactiv == false)
-            {
-                if (playerisrightofhookendposition == true) center -= multipleradius(-1);
-                else center -= multipleradius(1);
-            }
-            else
-            {
-                if (playerisrightofhookendposition == true) center -= multipleradius(1);
-                else center -= multipleradius(-1);
-            }
-        }
-
-        Vector3 startRelcenter = psm.hookstartposition - center;
-        Vector3 endRelcenter = psm.hookendposition - center;
-
         psm.hookstarttime += Time.deltaTime;
-        float fracComplete = psm.hookstarttime / (psm.flathookduration + currentclosestdistance * psm.distancespeedmultiplier);
-
-        psm.rb.MovePosition(Vector3.Slerp(startRelcenter, endRelcenter, fracComplete) + center);
-
-        if(Vector3.Distance(psm.transform.position, psm.hookendposition) < 0.2f)
+        if (Vector3.Distance(psm.transform.position, psm.hookendposition) < 1f && addvelocity == true)
         {
+            addvelocity = false;
             //Vector3 tpoint = psm.transform.position + Quaternion.Euler(0, 0, 100) * Vector2.up * 1;
             //psm.rb.AddForce(tpoint * psm.hookreleaseforce, ForceMode2D.Impulse);
 
             if (psm.gravityswitchactiv == false)
             {
                 Vector3 direction;
-                if (playerisonleftsideofhookobject == true) direction = Quaternion.AngleAxis(playerangle - 70, Vector3.forward) * Vector3.up;
-                else direction = Quaternion.AngleAxis(playerangle + 70, Vector3.forward) * Vector3.up;
-                psm.rb.AddForce(direction * (currentclosestdistance + 10), ForceMode2D.Impulse);
+                if (playerisonleftsideofhookobject == true) direction = Quaternion.AngleAxis(playerangle - (90 - psm.hookangle), Vector3.forward) * Vector3.up;
+                else direction = Quaternion.AngleAxis(playerangle + (90 - psm.hookangle), Vector3.forward) * Vector3.up;
+                psm.rb.AddForce(direction * (currentclosestdistance + psm.hookreleaseforce), ForceMode2D.Impulse);
                 psm.rb.gravityScale = hookgravityscale;
             }
             else
             {
                 Vector3 direction;
-                if (playerisonleftsideofhookobject == true) direction = Quaternion.AngleAxis(playerangle - 110, Vector3.forward) * Vector3.up;
-                else direction = Quaternion.AngleAxis(playerangle + 110, Vector3.forward) * Vector3.up;
-                psm.rb.AddForce(direction * (currentclosestdistance + 15), ForceMode2D.Impulse);
+                if (playerisonleftsideofhookobject == true) direction = Quaternion.AngleAxis(playerangle - (90 + psm.hookangle), Vector3.forward) * Vector3.up;
+                else direction = Quaternion.AngleAxis(playerangle + (90 + psm.hookangle), Vector3.forward) * Vector3.up;
+                psm.rb.AddForce(direction * (currentclosestdistance + psm.hookreleaseforce), ForceMode2D.Impulse);
                 psm.rb.gravityScale = hookgravityscale * -1;
             }
+        }
+        if(psm.rb.velocity == Vector2.zero)
+        {
+            Vector3 center = (psm.hookstartposition + psm.hookendposition) * 0.5f;
+            if (playerisonleftsideofhookobject == true)
+            {
+                if (psm.gravityswitchactiv == false)
+                {
+                    if (playerisrightofhookendposition == true) center -= multipleradius(1);
+                    else center -= multipleradius(-1);
+                }
+                else
+                {
+                    if (playerisrightofhookendposition == true) center -= multipleradius(-1);
+                    else center -= multipleradius(1);
+                }
+            }
+            else
+            {
+                if (psm.gravityswitchactiv == false)
+                {
+                    if (playerisrightofhookendposition == true) center -= multipleradius(-1);
+                    else center -= multipleradius(1);
+                }
+                else
+                {
+                    if (playerisrightofhookendposition == true) center -= multipleradius(1);
+                    else center -= multipleradius(-1);
+                }
+            }
 
+            Vector3 startRelcenter = psm.transform.position - center;
+            Vector3 endRelcenter = psm.hookendposition - center;
+
+            float fracComplete = psm.hookstarttime / (psm.flathookduration + currentclosestdistance * psm.distancespeedmultiplier);
+
+            psm.rb.MovePosition(Vector3.Slerp(startRelcenter, endRelcenter, fracComplete) + center);
+        }
+        else
+        {
             psm.xvelocityafterhook = psm.rb.velocity.x;
             psm.inhookstate = false;
             psm.state = Playerstatemachine.States.Hookrelease;
         }
-        if(psm.hookstarttime > 0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
+
+
+        if (psm.hookstarttime > 5)//0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
         {
+            Debug.Log("switch");
             psm.inhookstate = false;
             psm.switchtoairstate();
         }
@@ -189,7 +200,7 @@ public class Playerhook
     }
     public void hookreleasemovement()
     {
-        if(playerisonleftsideofhookobject == true)
+        if (playerisonleftsideofhookobject == true)
         {
             if (psm.xvelocityafterhook > 0.2f)
             {
@@ -213,6 +224,5 @@ public class Playerhook
                 psm.switchtoairstate();
             }
         }
-
     }
 }

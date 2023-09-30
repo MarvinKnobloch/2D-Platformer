@@ -54,13 +54,14 @@ public class Playerstatemachine : MonoBehaviour
     [NonSerialized] public Vector3 hookstartposition;
     [NonSerialized] public Vector3 hookendposition;
     [NonSerialized] public float hookstarttime;
+    public float hookangle;
     public float flathookduration;
     public float distancespeedmultiplier;
     [NonSerialized] public float hookdistancetoobject;
     public float maxhookdistanceradius;
     public float hookradius;
     public float hookreleaseforce;
-    [NonSerialized] public float xvelocityafterhook;
+    public float xvelocityafterhook;
 
     //memorie
     public bool memoryisrunning;
@@ -129,6 +130,7 @@ public class Playerstatemachine : MonoBehaviour
                 break;
             case States.Hook:
                 playerhook.movetohookposition();
+                //playerhook.newmovetohookpostion();
                 break;
             case States.Hookrelease:
                 playerhook.hookreleasemovement();
