@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Platformstate : MonoBehaviour
 {
-    public bool isactiv;
+    [SerializeField] private bool isactivonstart;
+    private bool isactiv;
     private SpriteRenderer spriteRenderer;
     private Color inactivcolor;
     private BoxCollider2D[] boxcolliders;
@@ -19,43 +20,40 @@ public class Platformstate : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (isactiv == true)
-        {
-            spriteRenderer.color = Color.white;
-        }
-        else spriteRenderer.color = inactivcolor;
+        if (isactivonstart) switchtoactive();
+        else switchtonotactive();
+
     }
     public void switchplatform()
     {
-        if (isactiv == true)
-        {
-            isactiv = false;
-            spriteRenderer.color = inactivcolor;
-            foreach (BoxCollider2D cols in boxcolliders)
-            {
-                cols.enabled = false;
-            }
-        }
-        else
-        {
-            isactiv = true;
-            spriteRenderer.color = Color.white;
-            foreach (BoxCollider2D cols in boxcolliders)
-            {
-                cols.enabled = true;
-            }
-        }
+        if (isactiv == true) switchtonotactive();
+        else switchtoactive();
     }
     public void switchtored()
     {
-        if (isactiv == true)
+        if (isactiv == true) switchtonotactive();
+    }
+    private void switchtoactive()
+    {
+        isactiv = true;
+        spriteRenderer.color = Color.white;
+        foreach (BoxCollider2D cols in boxcolliders)
         {
-            isactiv = false;
-            spriteRenderer.color = inactivcolor;
-            foreach (BoxCollider2D cols in boxcolliders)
-            {
-                cols.enabled = false;
-            }
+            cols.enabled = true;
         }
+    }
+    private void switchtonotactive()
+    {
+        isactiv = false;
+        spriteRenderer.color = inactivcolor;
+        foreach (BoxCollider2D cols in boxcolliders)
+        {
+            cols.enabled = false;
+        }
+    }
+    public void resetswitchplatform()
+    {
+        if (isactivonstart == true) switchtoactive();
+        else switchtonotactive();
     }
 }

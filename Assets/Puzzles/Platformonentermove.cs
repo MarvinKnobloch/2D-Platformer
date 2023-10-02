@@ -7,6 +7,7 @@ public class Platformonentermove : MonoBehaviour
 {
     public Vector3 Endposi;
     public Vector3 Startposi;
+    public Vector3 Resetposi;
 
     private float moveforward = 0;
     public float movesideward;
@@ -24,6 +25,7 @@ public class Platformonentermove : MonoBehaviour
         dontmove,
         movetoend,
         movetostart,
+        reset,
     }
     void Awake()
     {
@@ -50,6 +52,9 @@ public class Platformonentermove : MonoBehaviour
                 break;
             case State.movetostart:
                 tostart();
+                break;
+            case State.reset:
+                resetmovement();
                 break;
         }
     }
@@ -83,6 +88,23 @@ public class Platformonentermove : MonoBehaviour
         movetime += Time.deltaTime;
         float precentagecomplete = movetime / time;
         transform.position = Vector2.Lerp(Endposi, Startposi, precentagecomplete);
+        if (transform.position == Startposi)
+        {
+            movetime = 0f;
+            state = State.dontmove;
+        }
+    }
+    public void resetform()
+    {
+        movetime = 0;
+        Resetposi = transform.position;
+        state = State.reset;
+    }
+    private void resetmovement()
+    {
+        movetime += Time.deltaTime;
+        float precentagecomplete = movetime / fasttraveltime;
+        transform.position = Vector2.Lerp(Resetposi, Startposi, precentagecomplete);
         if (transform.position == Startposi)
         {
             movetime = 0f;
