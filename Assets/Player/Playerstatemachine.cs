@@ -214,6 +214,7 @@ public class Playerstatemachine : MonoBehaviour
         currentdashcount = 0;
         canjump = true;
         doublejump = true;
+        Globalcalls.jumpcantriggerswitch = true;
         isjumping = false;
         state = States.Ground;
         if (gravityswitchactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
@@ -257,6 +258,7 @@ public class Playerstatemachine : MonoBehaviour
         canjump = false;
         doublejump = false;
         isjumping = false;
+        Globalcalls.jumpcantriggerswitch = true;
         inhookstate = false;
         playermemoryimage.SetActive(false);
         currentdashcount = maxdashcount;

@@ -9,4 +9,6 @@ public static class Globalcalls
 
     public static int currentgravitystacks;
     public static int currentmemorystacks;
+
+    public static bool candash = true;
 }

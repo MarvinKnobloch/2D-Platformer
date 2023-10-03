@@ -101,14 +101,14 @@ public class Playermovement
 
     public void playerdash()
     {
-        if (psm.controlls.Player.Dash.WasPerformedThisFrame())
+        if (psm.controlls.Player.Dash.WasPerformedThisFrame() && Globalcalls.candash == true)
         {
             startdash();
         }
     }
     public void playerairdash()
     {
-        if(psm.controlls.Player.Dash.WasPerformedThisFrame() && psm.currentdashcount < psm.maxdashcount)
+        if(psm.controlls.Player.Dash.WasPerformedThisFrame() && psm.currentdashcount < psm.maxdashcount && Globalcalls.candash == true)
         {
             psm.currentdashcount++;
             startdash();
