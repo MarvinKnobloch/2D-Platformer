@@ -15,6 +15,10 @@ public class Resetplatforms : MonoBehaviour
                 {
                     platformstate.resetswitchplatform();
                 }
+                if (obj.TryGetComponent(out Platformonentermove platformonentermove))
+                {
+                    platformonentermove.resetform();
+                }
             }
         }
     }

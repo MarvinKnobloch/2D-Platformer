@@ -181,3 +181,7 @@ Library/StateCache/SceneView/8c/8cd7c613bf844de3b80696e27a479d5e.json
 Logs/ApiUpdaterCheck.txt
 obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache
 obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+.vs/2D-Platformer/v16/.suo
+Assembly-CSharp.csproj
+Logs/shadercompiler-UnityShaderCompiler.exe0.log
+obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
