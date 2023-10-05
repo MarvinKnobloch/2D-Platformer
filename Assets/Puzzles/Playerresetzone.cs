@@ -29,7 +29,7 @@ public class Playerresetzone : MonoBehaviour
         {
             for (int i = 0; i < moveonenterplatforms.Length; i++)
             {
-                moveonenterplatforms[i].resetform();
+                moveonenterplatforms[i].resetforminstant();
             }
         }
         if(switchstateplatforms.Length != 0)

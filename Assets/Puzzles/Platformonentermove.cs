@@ -111,4 +111,10 @@ public class Platformonentermove : MonoBehaviour
             state = State.dontmove;
         }
     }
+    public void resetforminstant()
+    {
+        movetime = 0f;
+        state = State.dontmove;
+        transform.position = Startposi;
+    }
 }
