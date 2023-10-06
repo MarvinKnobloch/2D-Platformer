@@ -78,6 +78,7 @@
     <Compile Include="Assets\Camerahorizontal.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\Menu\Menucontroller.cs" />
     <Compile Include="Assets\Cooldowns.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Puzzles\Resetplatforms.cs" />
@@ -115,6 +116,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\Menu\KeyrebindUI.cs" />
+    <Compile Include="Assets\Menu\Keybindinputmanager.cs" />
+    <Compile Include="Assets\Menu\Loadhotkeys.cs" />
+    <Compile Include="Assets\Menu\Handlemenu.cs" />
+    <Compile Include="Assets\Menu\Handlebutton.cs" />
+    <Compile Include="Assets\Menu\Settingcontroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -96,7 +96,7 @@ public class Playerstatemachine : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        controlls = new Controlls();
+        controlls = Keybindinputmanager.inputActions;
         switchtogroundstate();
 
         playermovement.psm = this;
@@ -114,95 +114,99 @@ public class Playerstatemachine : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        switch (state)
+        if (Globalcalls.gameispaused == false)
         {
-            default:
-            case States.Ground:
-                playermovement.playergroundmovement();
-                break;
-            case States.Groundintoair:
-                playermovement.playerairmovement();
-                break;
-            case States.Air:
-                playermovement.playerairmovement();
-                break;
-            case States.Dash:
-                break;
-            case States.Hook:
-                playerhook.movetohookposition();
-                //playerhook.newmovetohookpostion();
-                break;
-            case States.Hookrelease:
-                playerhook.hookreleasemovement();
-                break;
-            case States.Slidewall:
-                break;
-            case States.Infrontofwall:
-                break;
+            switch (state)
+            {
+                default:
+                case States.Ground:
+                    playermovement.playergroundmovement();
+                    break;
+                case States.Groundintoair:
+                    playermovement.playerairmovement();
+                    break;
+                case States.Air:
+                    playermovement.playerairmovement();
+                    break;
+                case States.Dash:
+                    break;
+                case States.Hook:
+                    playerhook.movetohookposition();
+                    //playerhook.newmovetohookpostion();
+                    break;
+                case States.Hookrelease:
+                    playerhook.hookreleasemovement();
+                    break;
+                case States.Slidewall:
+                    break;
+                case States.Infrontofwall:
+                    break;
+            }
         }
     }
     private void Update()
     {
-        switch (state)
+        if(Globalcalls.gameispaused == false)
         {
-            default:
-            case States.Ground:
-                playermovement.playerflip();
-                playercollider.playergroundcheck();
-                playermovement.playercheckforgroundstate();
-                playerhook.playercheckforhook();
-                playergravityswitch.playerswitchgravity();
-                playermemories.playerplacememory();
-                playermovement.playerdash();
-                playermovement.playergroundjump();
-                break;
-            case States.Groundintoair:
-                playermovement.controlljumpheight();
-                playermovement.playergroundintoair();
-                playerhook.playercheckforhook();
-                playermemories.playerplacememory();
-                playermovement.playerairdash();
-                break;
-            case States.Air:
-                playermovement.playerflip();
-                playermovement.controlljumpheight();
-                playercollider.playergroundcheckair();
-                playermovement.playercheckforairstate();
-                playerhook.playercheckforhook();
-                playergravityswitch.playerswitchgravity();
-                playermemories.playerplacememory();
-                playermovement.playerairdash();
-                //playermovement.playerdoublejump();
-                break;
-            case States.Dash:
-                playermovement.playerdashstate();
-                break;
-            case States.Hook:
-                break;
-            case States.Hookrelease:
-                playermovement.playerflip();
-                playercollider.playergroundcheckair();
-                playermovement.playercheckforairstate();
-                playerhook.playercheckforhook();
-                playergravityswitch.playerswitchgravity();
-                playermemories.playerplacememory();
-                playermovement.playerairdash();
-                break;
-            case States.Slidewall:
-                playercollider.playerslidewall();
-                playermovement.playerdash();
-                break;
-            case States.Infrontofwall:
-                playermovement.playerflip();
-                playercollider.playerinfrontofwall();
-                playerhook.playercheckforhook();
-                playergravityswitch.playerswitchgravity();
-                playermemories.playerplacememory();
-                playermovement.playerdash();
-                playermovement.playergroundjump();
-                break;
-
-
+            switch (state)
+            {
+                default:
+                case States.Ground:
+                    playermovement.playerflip();
+                    playercollider.playergroundcheck();
+                    playermovement.playercheckforgroundstate();
+                    playerhook.playercheckforhook();
+                    playergravityswitch.playerswitchgravity();
+                    playermemories.playerplacememory();
+                    playermovement.playerdash();
+                    playermovement.playergroundjump();
+                    break;
+                case States.Groundintoair:
+                    playermovement.controlljumpheight();
+                    playermovement.playergroundintoair();
+                    playerhook.playercheckforhook();
+                    playermemories.playerplacememory();
+                    playermovement.playerairdash();
+                    break;
+                case States.Air:
+                    playermovement.playerflip();
+                    playermovement.controlljumpheight();
+                    playercollider.playergroundcheckair();
+                    playermovement.playercheckforairstate();
+                    playerhook.playercheckforhook();
+                    playergravityswitch.playerswitchgravity();
+                    playermemories.playerplacememory();
+                    playermovement.playerairdash();
+                    //playermovement.playerdoublejump();
+                    break;
+                case States.Dash:
+                    playermovement.playerdashstate();
+                    break;
+                case States.Hook:
+                    break;
+                case States.Hookrelease:
+                    playermovement.playerflip();
+                    playercollider.playergroundcheckair();
+                    playermovement.playercheckforairstate();
+                    playerhook.playercheckforhook();
+                    playergravityswitch.playerswitchgravity();
+                    playermemories.playerplacememory();
+                    playermovement.playerairdash();
+                    break;
+                case States.Slidewall:
+                    playercollider.playerslidewall();
+                    playermovement.playerdash();
+                    break;
+                case States.Infrontofwall:
+                    playermovement.playerflip();
+                    playercollider.playerinfrontofwall();
+                    playerhook.playercheckforhook();
+                    playergravityswitch.playerswitchgravity();
+                    playermemories.playerplacememory();
+                    playermovement.playerdash();
+                    playermovement.playergroundjump();
+                    break;
+            }
         }
     }
     public void OnMove(InputValue inputvalue)

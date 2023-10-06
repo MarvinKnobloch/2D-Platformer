@@ -172,6 +172,34 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""37ff6e7e-246c-4001-86b1-4438043c7809"",
+            ""actions"": [
+                {
+                    ""name"": ""Openmenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""2a6625e7-c643-4221-af93-c9ef2f6f6db6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""807328c6-6393-43df-ae63-97cf5c7d92cd"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Openmenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -245,6 +273,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         m_Player_Gravityswitch = m_Player.FindAction("Gravityswitch", throwIfNotFound: true);
         m_Player_Hook = m_Player.FindAction("Hook", throwIfNotFound: true);
         m_Player_Memorie = m_Player.FindAction("Memorie", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_Openmenu = m_Menu.FindAction("Openmenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -373,6 +404,39 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private IMenuActions m_MenuActionsCallbackInterface;
+    private readonly InputAction m_Menu_Openmenu;
+    public struct MenuActions
+    {
+        private @Controlls m_Wrapper;
+        public MenuActions(@Controlls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Openmenu => m_Wrapper.m_Menu_Openmenu;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void SetCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+            {
+                @Openmenu.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenmenu;
+                @Openmenu.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenmenu;
+                @Openmenu.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenmenu;
+            }
+            m_Wrapper.m_MenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Openmenu.started += instance.OnOpenmenu;
+                @Openmenu.performed += instance.OnOpenmenu;
+                @Openmenu.canceled += instance.OnOpenmenu;
+            }
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -426,5 +490,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         void OnGravityswitch(InputAction.CallbackContext context);
         void OnHook(InputAction.CallbackContext context);
         void OnMemorie(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnOpenmenu(InputAction.CallbackContext context);
     }
 }

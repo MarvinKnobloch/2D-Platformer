@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class Globalcalls
 {
+    public static bool gameispaused;
+
     public static bool jumpcantriggerswitch;
     public static Vector3 playeresetpoint;
 
@@ -11,4 +13,5 @@ public static class Globalcalls
     public static int currentmemorystacks;
 
     public static bool candash = true;
+
 }
