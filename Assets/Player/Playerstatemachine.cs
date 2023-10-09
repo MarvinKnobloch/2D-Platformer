@@ -24,7 +24,7 @@ public class Playerstatemachine : MonoBehaviour
     [NonSerialized] public bool doublejump;
     public bool isjumping;
     public float jumptime;
-    public float maxshortjumptime;  // 0.13f sollte ganz ok sein
+    [NonSerialized] public float maxshortjumptime = 0.01f;  // 0.13f sollte ganz ok sein       0.01f = deaktiviert
     public float airgravityscale;
 
     public BoxCollider2D groundcheckcollider;
@@ -32,6 +32,9 @@ public class Playerstatemachine : MonoBehaviour
     [NonSerialized] public bool groundcheck;
     public float groundgravityscale;
     [NonSerialized] public bool faceright;
+
+    [NonSerialized] public bool isonplatform;
+    [NonSerialized] public Rigidbody2D platformrb;
 
     //Dash
     public float dashlength;
@@ -221,8 +224,11 @@ public class Playerstatemachine : MonoBehaviour
         Globalcalls.jumpcantriggerswitch = true;
         isjumping = false;
         state = States.Ground;
-        if (gravityswitchactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
-        else rb.gravityScale = groundgravityscale * -1;
+        if (isonplatform == false)
+        {
+            if (gravityswitchactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
+            else rb.gravityScale = groundgravityscale * -1;
+        }
 
     }
     public void groundintoairswitch()

@@ -45,6 +45,6 @@ public class Handlebutton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     }
     public void closegame()
     {
-
+        Application.Quit();
     }
 }

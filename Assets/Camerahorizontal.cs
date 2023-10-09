@@ -7,8 +7,12 @@ public class Camerahorizontal : MonoBehaviour
 {
     [SerializeField] private PolygonCollider2D bottomcollider;
     [SerializeField] private PolygonCollider2D topcollider;
+    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] private CinemachineConfiner cinemachineConfiner;
     private Collider2D Collider2D;
+
+    [SerializeField] private int bottomcameradistance;
+    [SerializeField] private int topcameradistance;
 
     private void Awake()
     {
@@ -19,9 +23,16 @@ public class Camerahorizontal : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Vector2 exitdirection = (collision.transform.position - Collider2D.bounds.center).normalized;
-            if (exitdirection.y > 0) cinemachineConfiner.m_BoundingShape2D = topcollider;
-            else cinemachineConfiner.m_BoundingShape2D = bottomcollider;
-
+            if (exitdirection.y > 0)
+            {
+                cinemachineConfiner.m_BoundingShape2D = topcollider;
+                cinemachineVirtualCamera.m_Lens.OrthographicSize = topcameradistance;
+            }
+            else 
+            { 
+                cinemachineConfiner.m_BoundingShape2D = bottomcollider;
+                cinemachineVirtualCamera.m_Lens.OrthographicSize = bottomcameradistance;
+            }
         }
     }
 }

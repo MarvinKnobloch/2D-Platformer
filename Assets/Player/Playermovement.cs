@@ -14,6 +14,11 @@ public class Playermovement
             psm.playervelocity.Set(psm.movementspeed * psm.slopemovement.x * -psm.move.x, psm.movementspeed * psm.slopemovement.y * -psm.move.x);
             psm.rb.velocity = psm.playervelocity;
         }
+        else if(psm.isonplatform == true)
+        {
+            psm.playervelocity.Set(psm.platformrb.velocity.x + psm.move.x * psm.movementspeed, psm.platformrb.velocity.y);
+            psm.rb.velocity = psm.playervelocity;
+        }
         else
         {
             if(psm.gravityswitchactiv == false) psm.playervelocity.Set(psm.move.x * psm.movementspeed, -0.5f);

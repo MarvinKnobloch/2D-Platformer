@@ -15,6 +15,7 @@ public class Platformmove : MonoBehaviour
 
 
     public State state;
+    private Rigidbody2D rb;
 
     public enum State
     {
@@ -27,6 +28,7 @@ public class Platformmove : MonoBehaviour
         Startposi.z = 0;
         Endposi = transform.position + (transform.right * movesideward) + (transform.forward * moveforward) + (transform.up * moveup);
         Endposi.z = 0;
+        rb = GetComponent<Rigidbody2D>();
     }
     private void OnEnable()
     {
@@ -34,24 +36,27 @@ public class Platformmove : MonoBehaviour
         state = State.movetoend;
     }
 
-    private void FixedUpdate()                        //normals update hat den player nicht mitbewegt
+    private void Update()                        //normals update hat den player nicht mitbewegt
     {
-        switch (state)
+        if(rb != null)
         {
-            default:
-            case State.movetoend:
-                toend();
-                break;
-            case State.movetostart:
-                tostart();
-                break;
+            switch (state)
+            {
+                default:
+                case State.movetoend:
+                    toend();
+                    break;
+                case State.movetostart:
+                    tostart();
+                    break;
+            }
         }
     }
     void toend()
     {
         movetime += Time.deltaTime;
         float precentagecomplete = movetime / traveltime;
-        transform.position = Vector2.Lerp(Startposi, Endposi , precentagecomplete);
+        rb.transform.position = Vector2.Lerp(Startposi, Endposi , precentagecomplete);
         if (transform.position == Endposi)
         {
             movetime = 0;
@@ -62,7 +67,7 @@ public class Platformmove : MonoBehaviour
     {
         movetime += Time.deltaTime;
         float precentagecomplete = movetime / traveltime;
-        transform.position = Vector2.Lerp(Endposi, Startposi, precentagecomplete);
+        rb.transform.position = Vector2.Lerp(Endposi, Startposi, precentagecomplete);
         if (transform.position == Startposi)
         {
             movetime = 0f;

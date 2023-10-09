@@ -7,6 +7,7 @@ public class Menucontroller : MonoBehaviour
     private Controlls controlls;
 
     [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject menuoverview;
     private float normaltimescale;
     private float normalfixeddeltatime;
 
@@ -15,12 +16,13 @@ public class Menucontroller : MonoBehaviour
         controlls = Keybindinputmanager.inputActions;
         normaltimescale = Time.timeScale;
         normalfixeddeltatime = Time.fixedDeltaTime;
+        Globalcalls.gameispaused = false;
     }
     private void OnEnable()
     {
         controlls.Enable();
     }
-    void Update()
+    private void Update()
     {
         if (controlls.Menu.Openmenu.WasPerformedThisFrame() && Globalcalls.gameispaused == false)
         {
@@ -29,7 +31,7 @@ public class Menucontroller : MonoBehaviour
             Time.fixedDeltaTime = 0f;
             menu.SetActive(true);
         }
-        else if(controlls.Menu.Openmenu.WasPerformedThisFrame() && menu.activeSelf == true)
+        else if(controlls.Menu.Openmenu.WasPerformedThisFrame() && menuoverview.activeSelf == true)
         {
             closemenu();
         }
