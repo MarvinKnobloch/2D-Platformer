@@ -1,22 +1,26 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Platformonentermove : MonoBehaviour
+public class Movingplatform : MonoBehaviour
 {
     private Rigidbody2D rb;
 
     public Vector3 Endposi;
     public Vector3 Startposi;
-    public Vector3 Resetposi;
 
     private float moveforward = 0;
     public float movesideward;
     public float moveup;
-    public float traveltime;
-    public float movetime;
 
+    [SerializeField] private float traveltime;
+    private float movetime;
+
+    [NonSerialized] public Vector3 velocity;
+    [NonSerialized] public Vector3 oldposi;
+
+    public bool moveonenter;
     [SerializeField] private bool fastreturn;
     [SerializeField] private float fasttraveltime;
 
@@ -24,10 +28,9 @@ public class Platformonentermove : MonoBehaviour
 
     public enum State
     {
-        dontmove,
         movetoend,
         movetostart,
-        reset,
+        dontmove,
     }
     void Awake()
     {
@@ -36,44 +39,45 @@ public class Platformonentermove : MonoBehaviour
         Startposi.z = 0;
         Endposi = transform.position + (transform.right * movesideward) + (transform.forward * moveforward) + (transform.up * moveup);
         Endposi.z = 0;
+        
+        oldposi = transform.position;
+
     }
     private void OnEnable()
     {
-        movetime = 0;
-        state = State.dontmove;
+        if (moveonenter == false) state = State.movetoend;
+        else state = State.dontmove;
     }
-
-    private void FixedUpdate()                        //normals update hat den player nicht mitbewegt
+    private void Update()                        //normals update hat den player nicht mitbewegt
+    {
+        velocity = (transform.position - oldposi) / Time.deltaTime;
+        oldposi = transform.position;
+    }
+    private void FixedUpdate()
     {
         switch (state)
         {
             default:
-            case State.dontmove:
-                break;
             case State.movetoend:
                 toend();
                 break;
             case State.movetostart:
                 tostart();
                 break;
-            case State.reset:
-                resetmovement();
+            case State.dontmove:
+                holdposi();
                 break;
         }
     }
-    public void startmovement()
+    private void toend()
     {
-        state = State.movetoend;
-    }
-    void toend()
-    {
-        movetime += Time.deltaTime;
+        movetime += Time.fixedDeltaTime;
         float precentagecomplete = movetime / traveltime;
-        transform.position = Vector2.Lerp(Startposi, Endposi, precentagecomplete);
-        if (transform.position == Endposi)
+        rb.MovePosition(Vector2.Lerp(Startposi, Endposi, precentagecomplete));
+        if (movetime >= traveltime)
         {
-            movetime = 0;
             state = State.movetostart;
+            movetime = 0;
         }
     }
     void tostart()
@@ -85,39 +89,39 @@ public class Platformonentermove : MonoBehaviour
         else moveback(fasttraveltime);
 
     }
-
     private void moveback(float time)
     {
-        movetime += Time.deltaTime;
+        movetime += Time.fixedDeltaTime;
         float precentagecomplete = movetime / time;
-        transform.position = Vector2.Lerp(Endposi, Startposi, precentagecomplete);
-        if (transform.position == Startposi)
+        rb.MovePosition(Vector2.Lerp(Endposi, Startposi, precentagecomplete));
+        if (movetime >= time)
         {
-            movetime = 0f;
-            state = State.dontmove;
+            if(moveonenter == false)
+            {
+                state = State.movetoend;
+                movetime = 0;
+            }
+            else
+            {
+                state = State.dontmove;
+                movetime = 0;
+            }
         }
     }
-    public void resetform()
+    public void startmovement()
     {
+        state = State.movetoend;
         movetime = 0;
-        Resetposi = transform.position;
-        state = State.reset;
-    }
-    private void resetmovement()
-    {
-        movetime += Time.deltaTime;
-        float precentagecomplete = movetime / fasttraveltime;
-        transform.position = Vector2.Lerp(Resetposi, Startposi, precentagecomplete);
-        if (transform.position == Startposi)
-        {
-            movetime = 0f;
-            state = State.dontmove;
-        }
     }
     public void resetforminstant()
     {
         movetime = 0f;
         state = State.dontmove;
         transform.position = Startposi;
+    }
+    private void holdposi()
+    {
+        rb.transform.position = Startposi;
+        rb.velocity = Vector2.zero;
     }
 }

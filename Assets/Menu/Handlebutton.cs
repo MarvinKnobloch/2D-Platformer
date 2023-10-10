@@ -47,4 +47,8 @@ public class Handlebutton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         Application.Quit();
     }
+    public void toggledash()
+    {
+        Globalcalls.candash = !Globalcalls.candash;
+    }
 }

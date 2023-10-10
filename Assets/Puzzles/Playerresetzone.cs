@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Playerresetzone : MonoBehaviour
 {
-    [SerializeField] private Platformonentermove[] moveonenterplatforms;
+    [SerializeField] private Movingplatform[] moveonenterplatforms;
     [SerializeField] private Platformstate[] switchstateplatforms;
     private void OnTriggerEnter2D(Collider2D collision)
     {

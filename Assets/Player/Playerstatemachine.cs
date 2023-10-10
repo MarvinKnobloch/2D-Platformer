@@ -29,12 +29,12 @@ public class Playerstatemachine : MonoBehaviour
 
     public BoxCollider2D groundcheckcollider;
     public LayerMask groundchecklayer;
-    [NonSerialized] public bool groundcheck;
+    public bool groundcheck;
     public float groundgravityscale;
     [NonSerialized] public bool faceright;
 
-    [NonSerialized] public bool isonplatform;
-    [NonSerialized] public Rigidbody2D platformrb;
+    public bool isonplatform;
+    public Movingplatform movingplatform;
 
     //Dash
     public float dashlength;

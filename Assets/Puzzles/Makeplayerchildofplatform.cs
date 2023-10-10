@@ -4,50 +4,50 @@ using UnityEngine;
 
 public class Makeplayerchildofplatform : MonoBehaviour
 {
-    [SerializeField] private bool moveplatformmoveonenter;
+    private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        boxCollider.size = new Vector2(transform.GetChild(0).transform.localScale.x * 0.96f, transform.GetChild(0).transform.localScale.y);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            //collision.transform.parent = transform;        //braucht ein übertransform damit der Scale vom Char nicht umgeändert wird
-            collision.GetComponent<Playerstatemachine>().isonplatform = true;
-            collision.GetComponent<Rigidbody2D>().gravityScale = 30;
-            collision.GetComponent<Playerstatemachine>().platformrb = rb;
-
-            if (moveplatformmoveonenter == true)
+            if (collision.TryGetComponent(out Playerstatemachine playerstatemachine))
             {
-                if(transform.parent.TryGetComponent(out Platformonentermove platformonentermove))
+                if (gameObject.TryGetComponent(out Movingplatform movingplatform))
                 {
-                    if (platformonentermove.state == Platformonentermove.State.dontmove) platformonentermove.startmovement();
+                    if(playerstatemachine.gravityswitchactiv == false) collision.GetComponent<Rigidbody2D>().gravityScale = 30;
+                    else collision.GetComponent<Rigidbody2D>().gravityScale = -30;
+                    playerstatemachine.movingplatform = movingplatform;
+                    playerstatemachine.isonplatform = true;
+                    if (movingplatform.moveonenter == true)
+                    {
+                        if (movingplatform.state == Movingplatform.State.dontmove) movingplatform.startmovement();
+                    }
+
                 }
             }
-        }
+        }        
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             if(collision.TryGetComponent(out Playerstatemachine playerstatemachine))
             {
-                if(playerstatemachine.platformrb.gameObject == gameObject)
+                if(playerstatemachine.movingplatform != null)
                 {
-                    playerstatemachine.isonplatform = false;
-                    playerstatemachine.platformrb = null;
+                    if (playerstatemachine.movingplatform.gameObject == gameObject)
+                    {
+                        playerstatemachine.isonplatform = false;
+                        playerstatemachine.movingplatform = null;
+                    }
                 }
             }
-            //if (collision.transform.IsChildOf(gameObject.transform))
-            //{
-            //    collision.GetComponent<Playerstatemachine>().isonplatform = false;
-            //    collision.GetComponent<Playerstatemachine>().platformrb = null;
-            //    collision.transform.parent = null;
-            //}
         }
     }
 }

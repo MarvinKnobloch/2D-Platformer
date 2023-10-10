@@ -11,9 +11,12 @@ public class Resetplatforms : MonoBehaviour
         {
             foreach (GameObject obj in resetplatforms)
             {
-                if (obj.TryGetComponent(out Platformonentermove platformonentermove))
+                if (obj.TryGetComponent(out Movingplatform movingplatform))
                 {
-                    platformonentermove.resetforminstant();
+                    if(movingplatform.moveonenter == true)
+                    {
+                        movingplatform.resetforminstant();
+                    }
                 }
                 if (obj.TryGetComponent(out Platformstate platformstate))
                 {

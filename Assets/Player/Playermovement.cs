@@ -16,7 +16,9 @@ public class Playermovement
         }
         else if(psm.isonplatform == true)
         {
-            psm.playervelocity.Set(psm.platformrb.velocity.x + psm.move.x * psm.movementspeed, psm.platformrb.velocity.y);
+            //if(psm.platformmove != null) psm.playervelocity.Set(psm.platformmove.velocity.x + psm.move.x * psm.movementspeed, psm.platformmove.velocity.y + psm.rb.velocity.y);
+            //psm.playervelocity.Set(psm.platformrb.velocity.x + psm.move.x * psm.movementspeed, psm.platformrb.velocity.y);
+            psm.playervelocity.Set(psm.movingplatform.velocity.x + psm.move.x * psm.movementspeed, psm.movingplatform.velocity.y);
             psm.rb.velocity = psm.playervelocity;
         }
         else
@@ -99,6 +101,10 @@ public class Playermovement
     public void playercheckforairstate()
     {
         if (psm.groundcheck == true && psm.rb.velocity.y <= 2f)
+        {
+            psm.switchtogroundstate();
+        }
+        else if (psm.groundcheck == true && psm.isonplatform == true) 
         {
             psm.switchtogroundstate();
         }
