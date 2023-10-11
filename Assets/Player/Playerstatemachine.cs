@@ -33,8 +33,10 @@ public class Playerstatemachine : MonoBehaviour
     public float groundgravityscale;
     [NonSerialized] public bool faceright;
 
+    //platform;
     public bool isonplatform;
     public Movingplatform movingplatform;
+    private float platformgravityscale = 30;
 
     //Dash
     public float dashlength;
@@ -203,6 +205,7 @@ public class Playerstatemachine : MonoBehaviour
                 case States.Infrontofwall:
                     playermovement.playerflip();
                     playercollider.playerinfrontofwall();
+                    playermovement.playercheckforgroundstate();
                     playerhook.playercheckforhook();
                     playergravityswitch.playerswitchgravity();
                     playermemories.playerplacememory();
@@ -228,6 +231,11 @@ public class Playerstatemachine : MonoBehaviour
         {
             if (gravityswitchactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
             else rb.gravityScale = groundgravityscale * -1;
+        }
+        else
+        {
+            if (gravityswitchactiv == false) rb.gravityScale = platformgravityscale;
+            else rb.gravityScale = platformgravityscale * -1;
         }
 
     }

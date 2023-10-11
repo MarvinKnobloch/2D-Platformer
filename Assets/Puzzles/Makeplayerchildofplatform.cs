@@ -20,8 +20,6 @@ public class Makeplayerchildofplatform : MonoBehaviour
             {
                 if (gameObject.TryGetComponent(out Movingplatform movingplatform))
                 {
-                    if(playerstatemachine.gravityswitchactiv == false) collision.GetComponent<Rigidbody2D>().gravityScale = 30;
-                    else collision.GetComponent<Rigidbody2D>().gravityScale = -30;
                     playerstatemachine.movingplatform = movingplatform;
                     playerstatemachine.isonplatform = true;
                     if (movingplatform.moveonenter == true)
