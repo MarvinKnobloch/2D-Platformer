@@ -5,6 +5,7 @@ using UnityEngine;
 public class Playerhook
 {
     public Playerstatemachine psm;
+    private float hooktargetupdatetime;
     private float currentclosestdistance;
     private float hookmaxdistance = 20;
     private Vector3 angleposition;
@@ -18,32 +19,36 @@ public class Playerhook
 
     public void playercheckforhook()
     {
-        if (psm.controlls.Player.Hook.WasPerformedThisFrame() && psm.inhookstate == false)
+        if (Hookobject.hookobjects.Count > 0)
         {
-            if (Hookobject.hookobjects.Count > 0)
+            checkforclosesthook();
+            if (psm.controlls.Player.Hook.WasPerformedThisFrame() && psm.inhookstate == false)
             {
-                checkforclosesthook();
-                if (currentclosestdistance < hookmaxdistance)
-                {
-                    hookplayer();
-                    addvelocity = true;
-                    psm.state = Playerstatemachine.States.Hook;
-                }
+                hookplayer();
+                addvelocity = true;
+                psm.state = Playerstatemachine.States.Hook;
             }
         }
     }
-    private void checkforclosesthook()
+    public void checkforclosesthook()
     {
-        currentclosestdistance = 100;
-        float objectdistance;
-        for (int i = 0; i < Hookobject.hookobjects.Count; i++)
+        hooktargetupdatetime += Time.deltaTime;
+        if (hooktargetupdatetime > 0.1f)
         {
-            objectdistance = Vector3.Distance(psm.transform.position, Hookobject.hookobjects[i].transform.position);
-            if (currentclosestdistance > objectdistance)
+            hooktargetupdatetime = 0;
+            currentclosestdistance = 100;
+            float objectdistance;
+            for (int i = 0; i < Hookobject.hookobjects.Count; i++)
             {
-                currentclosestdistance = objectdistance;
-                psm.hooktarget = Hookobject.hookobjects[i];
+                Hookobject.hookobjects[i].GetComponent<SpriteRenderer>().color = Color.red;
+                objectdistance = Vector3.Distance(psm.transform.position, Hookobject.hookobjects[i].transform.position);
+                if (currentclosestdistance > objectdistance)
+                {
+                    currentclosestdistance = objectdistance;
+                    psm.hooktarget = Hookobject.hookobjects[i];
+                }
             }
+            psm.hooktarget.GetComponent<SpriteRenderer>().color = Color.green;
         }
     }
     private void hookplayer()

@@ -9,7 +9,7 @@ public class KeyrebindUI : MonoBehaviour
 {
     [SerializeField]
     private InputActionReference inputActionReference;                                 // Gewährt zugriff auf die SpielerSteu(Input Action Asset) und dann kann nach den verschiedenen actionen gesucht werden
-    [Range(0, 4)]
+    [Range(0, 2)]
     [SerializeField]
     private int selectedBinding;                                                       // falls die Actionen mehrere Keybinds hat (0, 4) = 4 verschiedene keybinds
     [SerializeField]

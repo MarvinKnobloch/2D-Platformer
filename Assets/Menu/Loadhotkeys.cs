@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Loadhotkeys : MonoBehaviour                                       //sollte im Startmenu sein und dann dontdestroy on load
 {
     [SerializeField] private InputActionReference inputActionReference;
-    [Range(0, 4)]
+    [Range(0, 2)]
     [SerializeField] private int selectedBinding;
     [SerializeField] private InputBinding.DisplayStringOptions displayStringOptions;
     [SerializeField] private InputBinding inputBinding;

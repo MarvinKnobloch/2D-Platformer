@@ -111,7 +111,9 @@ public class Playerstatemachine : MonoBehaviour
         playermemories.psm = this;
 
         Globalcalls.playeresetpoint = transform.position;
-       
+
+        //controlls.Player.Move.performed += Context => move = Context.ReadValue<Vector2>();
+
     }
     private void OnEnable()
     {
@@ -297,4 +299,5 @@ public class Playerstatemachine : MonoBehaviour
         memoryisrunning = false;
         playermemoryimage.SetActive(false);
     }
+    public void hooktargetupdate() => playerhook.checkforclosesthook();
 }

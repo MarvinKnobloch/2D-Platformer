@@ -17,8 +17,9 @@ public class Hookobject : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             hookobjects.Add(gameObject);
-            spriteRenderer.color = Color.green;
+            //spriteRenderer.color = Color.green;
             reactivatetimer = 0;
+            collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -31,8 +32,9 @@ public class Hookobject : MonoBehaviour
                 if(reactivatetimer > 1.4f)
                 {
                     hookobjects.Add(gameObject);
-                    spriteRenderer.color = Color.green;
+                    //spriteRenderer.color = Color.green;
                     reactivatetimer = 0;
+                    collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
                 }
             }
         }
@@ -42,7 +44,8 @@ public class Hookobject : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             hookobjects.Remove(gameObject);
-            spriteRenderer.color = Color.red;
+            collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
+            //spriteRenderer.color = Color.red;
         }
     }
 }
