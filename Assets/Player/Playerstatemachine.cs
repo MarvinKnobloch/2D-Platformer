@@ -300,4 +300,5 @@ public class Playerstatemachine : MonoBehaviour
         playermemoryimage.SetActive(false);
     }
     public void hooktargetupdate() => playerhook.checkforclosesthook();
+    public void resetgravity() => playergravityswitch.resetgravity();
 }

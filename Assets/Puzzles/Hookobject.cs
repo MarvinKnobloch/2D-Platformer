@@ -17,7 +17,6 @@ public class Hookobject : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             hookobjects.Add(gameObject);
-            //spriteRenderer.color = Color.green;
             reactivatetimer = 0;
             collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
         }
@@ -32,7 +31,6 @@ public class Hookobject : MonoBehaviour
                 if(reactivatetimer > 1.4f)
                 {
                     hookobjects.Add(gameObject);
-                    //spriteRenderer.color = Color.green;
                     reactivatetimer = 0;
                     collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
                 }
@@ -45,7 +43,7 @@ public class Hookobject : MonoBehaviour
         {
             hookobjects.Remove(gameObject);
             collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
-            //spriteRenderer.color = Color.red;
+            spriteRenderer.color = Color.red;
         }
     }
 }

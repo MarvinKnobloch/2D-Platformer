@@ -7,7 +7,6 @@ public class Playerhook
     public Playerstatemachine psm;
     private float hooktargetupdatetime;
     private float currentclosestdistance;
-    private float hookmaxdistance = 20;
     private Vector3 angleposition;
     private float playerangle;
     private Quaternion hookangle;
@@ -19,23 +18,31 @@ public class Playerhook
 
     public void playercheckforhook()
     {
-        if (Hookobject.hookobjects.Count > 0)
+        if (Hookobject.hookobjects.Count > 0 && psm.inhookstate == false)
         {
-            checkforclosesthook();
-            if (psm.controlls.Player.Hook.WasPerformedThisFrame() && psm.inhookstate == false)
+            hooktargetupdate();
+            if (psm.controlls.Player.Hook.WasPerformedThisFrame())
             {
+                checkforclosesthook();
                 hookplayer();
                 addvelocity = true;
                 psm.state = Playerstatemachine.States.Hook;
             }
         }
     }
-    public void checkforclosesthook()
+    private void hooktargetupdate()
     {
         hooktargetupdatetime += Time.deltaTime;
-        if (hooktargetupdatetime > 0.1f)
+        if (hooktargetupdatetime > 0.2f)
         {
-            hooktargetupdatetime = 0;
+            checkforclosesthook();
+        }
+    }
+    public void checkforclosesthook()
+    {
+        hooktargetupdatetime = 0;
+        if(psm.inhookstate == false)
+        {
             currentclosestdistance = 100;
             float objectdistance;
             for (int i = 0; i < Hookobject.hookobjects.Count; i++)
@@ -192,9 +199,8 @@ public class Playerhook
         }
 
 
-        if (psm.hookstarttime > 5)//0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
+        if (psm.hookstarttime > 2)//0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
         {
-            Debug.Log("switch");
             psm.inhookstate = false;
             psm.switchtoairstate();
         }

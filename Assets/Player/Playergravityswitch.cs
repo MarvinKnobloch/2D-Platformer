@@ -24,4 +24,16 @@ public class Playergravityswitch
     {
         platformrotate?.Invoke();
     }
+    public void resetgravity()
+    {
+        Globalcalls.currentgravitystacks = 0;
+        Cooldowns.instance.handlegravitystacks();
+        if (psm.gravityswitchactiv == true)
+        {
+            psm.gravityswitchactiv = !psm.gravityswitchactiv;
+            psm.transform.Rotate(180, 0, 0);
+            psm.rb.gravityScale *= -1;
+            platformrotate?.Invoke();
+        }
+    }
 }
