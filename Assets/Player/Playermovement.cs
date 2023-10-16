@@ -31,8 +31,16 @@ public class Playermovement
     }
     public void playerairmovement()
     {
-        if (psm.rb.velocity.y < -25) psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, -25);
-        else psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, psm.rb.velocity.y);
+        if(psm.gravityswitchactiv == false)
+        {
+            if (psm.rb.velocity.y < -25) psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, -25);
+            else psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, psm.rb.velocity.y);
+        }
+        else
+        {
+            if (psm.rb.velocity.y > 25) psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, 25);
+            else psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, psm.rb.velocity.y);
+        }
     }
     public void playercheckforgroundstate()
     {
