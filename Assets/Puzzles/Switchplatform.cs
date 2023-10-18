@@ -6,6 +6,7 @@ public class Switchplatform : MonoBehaviour
 {
     [SerializeField] private GameObject[] switchobjs;
     [SerializeField] private bool switchboth;
+    //[SerializeField] private bool disableonenter;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

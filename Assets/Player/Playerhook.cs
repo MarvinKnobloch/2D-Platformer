@@ -199,7 +199,7 @@ public class Playerhook
         }
 
 
-        if (psm.hookstarttime > 2)//0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
+        if (psm.hookstarttime > 0.5f)//0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
         {
             psm.inhookstate = false;
             psm.switchtoairstate();
