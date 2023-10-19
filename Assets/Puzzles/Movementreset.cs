@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Adddashstack : MonoBehaviour
+public class Movementreset : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -11,6 +11,7 @@ public class Adddashstack : MonoBehaviour
             if (collision.TryGetComponent(out Playerstatemachine playerstatemachine))
             {
                 if (playerstatemachine.currentdashcount > 0) playerstatemachine.currentdashcount--;
+                playerstatemachine.doublejump = true;
             }
             gameObject.SetActive(false);
         }

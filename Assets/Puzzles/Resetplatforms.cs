@@ -5,6 +5,7 @@ using UnityEngine;
 public class Resetplatforms : MonoBehaviour
 {
     [SerializeField] private GameObject[] resetplatforms;
+    [SerializeField] private GameObject[] movementresets;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -22,6 +23,10 @@ public class Resetplatforms : MonoBehaviour
                 {
                     platformstate.resetswitchplatform();
                 }
+            }
+            foreach (GameObject moveresets in movementresets)
+            {
+                moveresets.SetActive(true);
             }
         }
     }

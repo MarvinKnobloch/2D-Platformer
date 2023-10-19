@@ -62,6 +62,7 @@ public class Playermovement
     {
         if (psm.controlls.Player.Jump.WasPerformedThisFrame() && psm.doublejump == true)
         {
+            psm.rb.velocity = new Vector2(psm.rb.velocity.x, 0);
             Globalcalls.jumpcantriggerswitch = true;
             psm.doublejump = false;
             psm.isjumping = true;

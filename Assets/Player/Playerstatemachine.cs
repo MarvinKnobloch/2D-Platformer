@@ -184,7 +184,7 @@ public class Playerstatemachine : MonoBehaviour
                     playergravityswitch.playerswitchgravity();
                     playermemories.playerplacememory();
                     playermovement.playerairdash();
-                    //playermovement.playerdoublejump();
+                    playermovement.playerdoublejump();
                     break;
                 case States.Dash:
                     playermovement.playerdashstate();
@@ -225,7 +225,7 @@ public class Playerstatemachine : MonoBehaviour
     {
         currentdashcount = 0;
         canjump = true;
-        doublejump = true;
+        doublejump = false;
         Globalcalls.jumpcantriggerswitch = true;
         isjumping = false;
         state = States.Ground;
