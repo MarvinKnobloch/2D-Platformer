@@ -6,6 +6,7 @@ public class Playerresetzone : MonoBehaviour
 {
     [SerializeField] private Movingplatform[] moveonenterplatforms;
     [SerializeField] private Platformstate[] switchstateplatforms;
+    [SerializeField] private GameObject[] moveresetobjs;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -37,6 +38,13 @@ public class Playerresetzone : MonoBehaviour
             for (int i = 0; i < switchstateplatforms.Length; i++)
             {
                 switchstateplatforms[i].resetswitchplatform();
+            }
+        }
+        if(moveresetobjs.Length > 0)
+        {
+            for (int i = 0; i < moveresetobjs.Length; i++)
+            {
+                moveresetobjs[i].SetActive(true);
             }
         }
     }

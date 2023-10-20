@@ -199,6 +199,7 @@ public class Playerstatemachine : MonoBehaviour
                     playergravityswitch.playerswitchgravity();
                     playermemories.playerplacememory();
                     playermovement.playerairdash();
+                    playermovement.playerdoublejump();
                     break;
                 case States.Slidewall:
                     playercollider.playerslidewall();

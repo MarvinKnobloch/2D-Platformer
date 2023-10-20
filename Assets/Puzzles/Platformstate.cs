@@ -9,7 +9,7 @@ public class Platformstate : MonoBehaviour
     private bool isactiv;
     private SpriteRenderer spriteRenderer;
     private Color inactivcolor;
-    [SerializeField] private BoxCollider2D[] boxcolliders;
+    private BoxCollider2D[] boxcolliders;
 
     private void Awake()
     {
