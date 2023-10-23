@@ -16,6 +16,7 @@ public class Playermemories
                 psm.memoryisrunning = true;
                 psm.memoryposition = psm.transform.position;
                 psm.memoryvelocity = psm.rb.velocity;
+                psm.memorydashcount = psm.currentdashcount;
                 psm.playermemoryimage.transform.position = psm.transform.position;
                 psm.playermemoryimage.transform.rotation = psm.transform.rotation;
                 psm.playermemoryimage.SetActive(true);
@@ -28,6 +29,7 @@ public class Playermemories
                 psm.memorycdobject.disablecd();              //called psm.endmemorytimer
                 psm.rb.transform.position = psm.memoryposition;
                 psm.rb.velocity = psm.memoryvelocity;
+                psm.currentdashcount = psm.memorydashcount;
                 psm.cinemachineConfiner.m_BoundingShape2D = psm.memorycamera;
                 psm.switchtoairstate();
             }           

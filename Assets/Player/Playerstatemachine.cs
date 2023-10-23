@@ -72,6 +72,7 @@ public class Playerstatemachine : MonoBehaviour
     public bool memoryisrunning;
     [NonSerialized] public Vector3 memoryposition;
     [NonSerialized] public Vector2 memoryvelocity;
+    [NonSerialized] public int memorydashcount;
     public float memorymaxusetime;
     public GameObject playermemoryimage;
     public Collider2D memorycamera;

@@ -5,12 +5,20 @@ using UnityEngine;
 public class Addmemoriestacks : MonoBehaviour
 {
     public int stackcount;
+    [SerializeField] private float memorymaxusetime;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Globalcalls.currentmemorystacks = stackcount;
-            Cooldowns.instance.displaymemoriestacks();
+            if(collision.gameObject.TryGetComponent(out Playerstatemachine playerstatemachine))
+            {
+                if(playerstatemachine.memoryisrunning == false)
+                {
+                    collision.gameObject.GetComponent<Playerstatemachine>().memorymaxusetime = memorymaxusetime;
+                    Globalcalls.currentmemorystacks = stackcount;
+                    Cooldowns.instance.displaymemoriestacks();
+                }
+            }
         }
     }
 }
