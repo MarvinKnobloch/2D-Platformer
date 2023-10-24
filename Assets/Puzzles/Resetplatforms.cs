@@ -5,7 +5,7 @@ using UnityEngine;
 public class Resetplatforms : MonoBehaviour
 {
     [SerializeField] private GameObject[] resetplatforms;
-    [SerializeField] private GameObject[] movementresets;
+    [SerializeField] private GameObject[] movementresetsandzones;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -24,10 +24,11 @@ public class Resetplatforms : MonoBehaviour
                     platformstate.resetswitchplatform();
                 }
             }
-            foreach (GameObject moveresets in movementresets)
+            foreach (GameObject moveresets in movementresetsandzones)
             {
                 moveresets.SetActive(true);
             }
+            collision.GetComponent<Playerstatemachine>().resetplayer();
         }
     }
 }

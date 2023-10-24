@@ -19,6 +19,7 @@ public class Addmemoriestacks : MonoBehaviour
                     Cooldowns.instance.displaymemoriestacks();
                 }
             }
+            gameObject.SetActive(false);
         }
     }
 }

@@ -6,7 +6,7 @@ public class Playerresetzone : MonoBehaviour
 {
     [SerializeField] private Movingplatform[] moveonenterplatforms;
     [SerializeField] private Platformstate[] switchstateplatforms;
-    [SerializeField] private GameObject[] moveresetobjs;
+    [SerializeField] private GameObject[] moveresetobjsandzones;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -40,11 +40,11 @@ public class Playerresetzone : MonoBehaviour
                 switchstateplatforms[i].resetswitchplatform();
             }
         }
-        if(moveresetobjs.Length > 0)
+        if(moveresetobjsandzones.Length > 0)
         {
-            for (int i = 0; i < moveresetobjs.Length; i++)
+            for (int i = 0; i < moveresetobjsandzones.Length; i++)
             {
-                moveresetobjs[i].SetActive(true);
+                moveresetobjsandzones[i].SetActive(true);
             }
         }
     }
