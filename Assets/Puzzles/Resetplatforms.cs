@@ -28,7 +28,7 @@ public class Resetplatforms : MonoBehaviour
             {
                 moveresets.SetActive(true);
             }
-            collision.GetComponent<Playerstatemachine>().resetplayer();
+            collision.GetComponent<Playerstatemachine>().abilitiesreset();
         }
     }
 }

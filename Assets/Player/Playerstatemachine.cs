@@ -271,28 +271,17 @@ public class Playerstatemachine : MonoBehaviour
     }
     public void resetplayer()
     {
-        Globalcalls.currentgravitystacks = 0;
-        Cooldowns.instance.handlegravitystacks();
-        Globalcalls.currentmemorystacks = 0;
-        Cooldowns.instance.handlememorystacks();
-        if(memorycdobject.transform.parent.gameObject.activeSelf == true) memorycdobject.disablecd();                 //called endmemorietimer
+        abilitiesreset();
 
         canjump = false;
         doublejump = false;
         isjumping = false;
         Globalcalls.jumpcantriggerswitch = true;
         inhookstate = false;
-        playermemoryimage.SetActive(false);
         currentdashcount = maxdashcount;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
-        if (gravityswitchactiv == true)
-        {
-            transform.Rotate(180, 0, 0);
-            gravityswitchactiv = false;
-            playergravityswitch.triggerplatformrotate();
-        }
-        rb.gravityScale = airgravityscale;
+
         rb.velocity = Vector2.zero;
         state = States.Air;
     }
@@ -303,4 +292,22 @@ public class Playerstatemachine : MonoBehaviour
     }
     public void hooktargetupdate() => playerhook.checkforclosesthook();
     public void resetgravity() => playergravityswitch.resetgravity();
+
+    public void abilitiesreset()
+    {
+        Globalcalls.currentgravitystacks = 0;
+        Cooldowns.instance.handlegravitystacks();
+        Globalcalls.currentmemorystacks = 0;
+        Cooldowns.instance.handlememorystacks();
+        if (memorycdobject.transform.parent.gameObject.activeSelf == true) memorycdobject.disablecd();                 //called endmemorietimer
+        playermemoryimage.SetActive(false);
+
+        if (gravityswitchactiv == true)
+        {
+            transform.Rotate(180, 0, 0);
+            gravityswitchactiv = false;
+            playergravityswitch.triggerplatformrotate();
+        }
+        rb.gravityScale = airgravityscale;
+    }
 }
