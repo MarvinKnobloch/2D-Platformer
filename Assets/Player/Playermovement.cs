@@ -123,6 +123,7 @@ public class Playermovement
     {
         if (psm.controlls.Player.Dash.WasPerformedThisFrame() && Globalcalls.candash == true)
         {
+            psm.inair = true;
             startdash();
         }
     }

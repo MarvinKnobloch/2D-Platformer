@@ -17,6 +17,7 @@ public class Playerstatemachine : MonoBehaviour
 
     public float movementspeed;
     [NonSerialized] public float switchtoairtime;
+    public bool inair;
 
     //Jump
     public float jumpheight;
@@ -246,6 +247,7 @@ public class Playerstatemachine : MonoBehaviour
     public void groundintoairswitch()
     {
         Globalcalls.jumpcantriggerswitch = true;
+        inair = false;
         switchtoairtime = 0;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
@@ -255,6 +257,7 @@ public class Playerstatemachine : MonoBehaviour
     }
     public void switchtoairstate()
     {
+        inair = true;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
         if (gravityswitchactiv == false) rb.gravityScale = airgravityscale;
@@ -263,6 +266,7 @@ public class Playerstatemachine : MonoBehaviour
     }
     public void switchtoslidwall()
     {
+        inair = false;
         isjumping = false;
         if (gravityswitchactiv == false) rb.gravityScale = groundgravityscale;                      //mit Gravityscale kann ich beeinflussen wie schnell man auf einer slope ist(bei höherer gravity ist man nach oben langsamer aber dafür nach unten schneller)
         else rb.gravityScale = groundgravityscale * -1;
@@ -276,6 +280,7 @@ public class Playerstatemachine : MonoBehaviour
         canjump = false;
         doublejump = false;
         isjumping = false;
+        inair = false;
         Globalcalls.jumpcantriggerswitch = true;
         inhookstate = false;
         currentdashcount = maxdashcount;

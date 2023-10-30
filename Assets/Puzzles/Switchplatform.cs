@@ -13,7 +13,7 @@ public class Switchplatform : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameObject player = collision.gameObject;
-            if (player.GetComponent<Playerstatemachine>().state == Playerstatemachine.States.Air || player.GetComponent<Playerstatemachine>().state == Playerstatemachine.States.Groundintoair)
+            if (player.GetComponent<Playerstatemachine>().inair == true)
             {
                 if (Globalcalls.jumpcantriggerswitch == true)
                 {

@@ -26,6 +26,8 @@ public class Playerhook
                 checkforclosesthook();
                 hookplayer();
                 addvelocity = true;
+                psm.inair = true;
+                Globalcalls.jumpcantriggerswitch = true;
                 psm.state = Playerstatemachine.States.Hook;
             }
         }
