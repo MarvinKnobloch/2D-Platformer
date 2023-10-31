@@ -41,6 +41,7 @@ public class Hookobject : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            reactivatetimer = 0;
             hookobjects.Remove(gameObject);
             collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
             spriteRenderer.color = Color.red;

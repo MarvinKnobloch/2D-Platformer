@@ -13,7 +13,7 @@ public class Playerstatemachine : MonoBehaviour
     [NonSerialized] public Rigidbody2D rb;
 
     [NonSerialized] public Vector2 move;
-    [NonSerialized] public Vector2 playervelocity;
+    public Vector2 playervelocity;
 
     public float movementspeed;
     [NonSerialized] public float switchtoairtime;
@@ -98,6 +98,7 @@ public class Playerstatemachine : MonoBehaviour
         Hookrelease,
         Slidewall,
         Infrontofwall,
+        Empty,
     }
 
     private void Awake()
@@ -149,6 +150,8 @@ public class Playerstatemachine : MonoBehaviour
                 case States.Slidewall:
                     break;
                 case States.Infrontofwall:
+                    break;
+                case States.Empty:
                     break;
             }
         }
@@ -217,6 +220,8 @@ public class Playerstatemachine : MonoBehaviour
                     playermovement.playerdash();
                     playermovement.playergroundjump();
                     break;
+                case States.Empty:
+                    break;
             }
         }
     }
@@ -247,7 +252,7 @@ public class Playerstatemachine : MonoBehaviour
     public void groundintoairswitch()
     {
         Globalcalls.jumpcantriggerswitch = true;
-        inair = false;
+        inair = true;
         switchtoairtime = 0;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
@@ -286,6 +291,7 @@ public class Playerstatemachine : MonoBehaviour
         currentdashcount = maxdashcount;
         rb.sharedMaterial = nofriction;
         groundcheckcollider.sharedMaterial = nofriction;
+        StopCoroutine("usememory");
 
         rb.velocity = Vector2.zero;
         state = States.Air;
@@ -297,6 +303,23 @@ public class Playerstatemachine : MonoBehaviour
     }
     public void hooktargetupdate() => playerhook.checkforclosesthook();
     public void resetgravity() => playergravityswitch.resetgravity();
+
+    public void memorystart() => StartCoroutine("usememory");
+    IEnumerator usememory()
+    {
+        float savegravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        state = States.Empty;
+        rb.transform.position = memoryposition;
+        memorycdobject.disablecd();              //called psm.endmemorytimer
+        cinemachineConfiner.m_BoundingShape2D = memorycamera;
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(0.15f);
+        rb.gravityScale = savegravity;
+        rb.velocity = memoryvelocity;
+        currentdashcount = memorydashcount;
+        switchtoairstate();
+    }
 
     public void abilitiesreset()
     {

@@ -43,9 +43,18 @@ public class Makeplayerchildofplatform : MonoBehaviour
                     {
                         playerstatemachine.isonplatform = false;
                         playerstatemachine.movingplatform = null;
+                        controllgravity(playerstatemachine);
                     }
                 }
             }
+        }
+    }
+    private void controllgravity(Playerstatemachine playerstatemachine)
+    {
+        if (playerstatemachine.state == Playerstatemachine.States.Ground)
+        {
+            if (playerstatemachine.gravityswitchactiv == false) playerstatemachine.rb.gravityScale = playerstatemachine.groundgravityscale;
+            else playerstatemachine.rb.gravityScale = playerstatemachine.groundgravityscale * -1;
         }
     }
 }

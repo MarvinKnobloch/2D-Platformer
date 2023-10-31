@@ -16,7 +16,8 @@ public class Playergravityswitch
             Cooldowns.instance.handlegravitystacks();
             psm.gravityswitchactiv = !psm.gravityswitchactiv;
             psm.transform.Rotate(180, 0, 0);
-            psm.rb.gravityScale *= -1;
+            if (psm.rb.gravityScale > 0) psm.rb.gravityScale = psm.airgravityscale * -1;
+            else psm.rb.gravityScale = psm.airgravityscale;
             platformrotate?.Invoke();
         }
     }
@@ -32,7 +33,7 @@ public class Playergravityswitch
         {
             psm.gravityswitchactiv = !psm.gravityswitchactiv;
             psm.transform.Rotate(180, 0, 0);
-            psm.rb.gravityScale *= -1;
+            psm.rb.gravityScale = psm.airgravityscale;
             platformrotate?.Invoke();
         }
     }

@@ -43,21 +43,28 @@ public class Playerhook
     public void checkforclosesthook()
     {
         hooktargetupdatetime = 0;
-        if(psm.inhookstate == false)
+        if (Hookobject.hookobjects.Count > 0)
         {
-            currentclosestdistance = 100;
-            float objectdistance;
-            for (int i = 0; i < Hookobject.hookobjects.Count; i++)
+            if (psm.inhookstate == false)
             {
-                Hookobject.hookobjects[i].GetComponent<SpriteRenderer>().color = Color.red;
-                objectdistance = Vector3.Distance(psm.transform.position, Hookobject.hookobjects[i].transform.position);
-                if (currentclosestdistance > objectdistance)
+                currentclosestdistance = 100;
+                float objectdistance;
+                for (int i = 0; i < Hookobject.hookobjects.Count; i++)
                 {
-                    currentclosestdistance = objectdistance;
-                    psm.hooktarget = Hookobject.hookobjects[i];
+                    Hookobject.hookobjects[i].GetComponent<SpriteRenderer>().color = Color.red;
+                    objectdistance = Vector3.Distance(psm.transform.position, Hookobject.hookobjects[i].transform.position);
+                    if (currentclosestdistance > objectdistance)
+                    {
+                        currentclosestdistance = objectdistance;
+                        psm.hooktarget = Hookobject.hookobjects[i];
+                    }
                 }
+                psm.hooktarget.GetComponent<SpriteRenderer>().color = Color.green;
             }
-            psm.hooktarget.GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else
+        {
+            psm.hooktarget = null;
         }
     }
     private void hookplayer()
@@ -156,7 +163,7 @@ public class Playerhook
                 psm.rb.gravityScale = hookgravityscale * -1;
             }
         }
-        if(psm.rb.velocity == Vector2.zero)
+        if (psm.rb.velocity == Vector2.zero)
         {
             Vector3 center = (psm.hookstartposition + psm.hookendposition) * 0.5f;
             if (playerisonleftsideofhookobject == true)

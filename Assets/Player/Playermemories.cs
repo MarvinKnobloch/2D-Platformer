@@ -26,13 +26,21 @@ public class Playermemories
             }
             if (psm.memoryisrunning == true)
             {
-                psm.memorycdobject.disablecd();              //called psm.endmemorytimer
-                psm.rb.transform.position = psm.memoryposition;
-                psm.rb.velocity = psm.memoryvelocity;
-                psm.currentdashcount = psm.memorydashcount;
-                psm.cinemachineConfiner.m_BoundingShape2D = psm.memorycamera;
-                psm.switchtoairstate();
+                psm.memorystart();
             }           
         }
     }
+    //IEnumerator usememory()
+    //{
+    //    psm.state = Playerstatemachine.States.Empty;
+    //    psm.rb.transform.position = psm.memoryposition;
+    //    psm.rb.velocity = Vector2.zero;
+    //    yield return new WaitForSeconds(0.1f);
+    //    psm.state = Playerstatemachine.States.Air;
+    //    psm.memorycdobject.disablecd();              //called psm.endmemorytimer
+    //    psm.rb.velocity = psm.memoryvelocity;
+    //    psm.currentdashcount = psm.memorydashcount;
+    //    psm.cinemachineConfiner.m_BoundingShape2D = psm.memorycamera;
+    //    psm.switchtoairstate();
+    //}
 }
