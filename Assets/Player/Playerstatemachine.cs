@@ -12,8 +12,9 @@ public class Playerstatemachine : MonoBehaviour
 
     [NonSerialized] public Rigidbody2D rb;
 
-    [NonSerialized] public Vector2 move;
-    public Vector2 playervelocity;
+    private InputAction movehotkey;
+    public Vector2 move;
+    [NonSerialized] public Vector2 playervelocity;
 
     public float movementspeed;
     [NonSerialized] public float switchtoairtime;
@@ -105,6 +106,8 @@ public class Playerstatemachine : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         controlls = Keybindinputmanager.inputActions;
+        movehotkey = controlls.Player.Move;
+
         switchtogroundstate();
 
         playermovement.psm = this;
@@ -114,9 +117,6 @@ public class Playerstatemachine : MonoBehaviour
         playermemories.psm = this;
 
         Globalcalls.playeresetpoint = transform.position;
-
-        //controlls.Player.Move.performed += Context => move = Context.ReadValue<Vector2>();
-
     }
     private void OnEnable()
     {
@@ -160,6 +160,7 @@ public class Playerstatemachine : MonoBehaviour
     {
         if(Globalcalls.gameispaused == false)
         {
+            move.x = movehotkey.ReadValue<Vector2>().x;
             switch (state)
             {
                 default:
@@ -225,10 +226,10 @@ public class Playerstatemachine : MonoBehaviour
             }
         }
     }
-    public void OnMove(InputValue inputvalue)
+    /*public void OnMove(InputValue inputvalue)
     {
         move.x = inputvalue.Get<Vector2>().x;
-    }
+    }*/
     public void switchtogroundstate()
     {
         currentdashcount = 0;

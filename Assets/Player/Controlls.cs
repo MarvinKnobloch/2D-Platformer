@@ -89,6 +89,15 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scoutmode"",
+                    ""type"": ""Button"",
+                    ""id"": ""b3f90b4b-68ce-47f0-9d49-0042a18181d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -104,8 +113,30 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""left"",
+                    ""name"": ""up"",
+                    ""id"": ""7c4c8e84-ca2b-44ad-9e5c-36e40a596c60"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
                     ""id"": ""957ac5a3-8743-4f29-9576-5d8939107bc2"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""245b2263-2176-49ae-ac8b-d6ccef70113f"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -183,11 +214,22 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e46d4b96-f0e0-4aef-aff8-7290d534f874"",
-                    ""path"": ""<Keyboard>/m"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b73cbea-a2a7-4989-b04e-553ef119bcfc"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scoutmode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -294,6 +336,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         m_Player_Hook = m_Player.FindAction("Hook", throwIfNotFound: true);
         m_Player_Memorie = m_Player.FindAction("Memorie", throwIfNotFound: true);
         m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
+        m_Player_Scoutmode = m_Player.FindAction("Scoutmode", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Openmenu = m_Menu.FindAction("Openmenu", throwIfNotFound: true);
@@ -363,6 +406,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Hook;
     private readonly InputAction m_Player_Memorie;
     private readonly InputAction m_Player_Esc;
+    private readonly InputAction m_Player_Scoutmode;
     public struct PlayerActions
     {
         private @Controlls m_Wrapper;
@@ -374,6 +418,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         public InputAction @Hook => m_Wrapper.m_Player_Hook;
         public InputAction @Memorie => m_Wrapper.m_Player_Memorie;
         public InputAction @Esc => m_Wrapper.m_Player_Esc;
+        public InputAction @Scoutmode => m_Wrapper.m_Player_Scoutmode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -404,6 +449,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Esc.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
                 @Esc.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
                 @Esc.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEsc;
+                @Scoutmode.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoutmode;
+                @Scoutmode.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoutmode;
+                @Scoutmode.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnScoutmode;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -429,6 +477,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Esc.started += instance.OnEsc;
                 @Esc.performed += instance.OnEsc;
                 @Esc.canceled += instance.OnEsc;
+                @Scoutmode.started += instance.OnScoutmode;
+                @Scoutmode.performed += instance.OnScoutmode;
+                @Scoutmode.canceled += instance.OnScoutmode;
             }
         }
     }
@@ -520,6 +571,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         void OnHook(InputAction.CallbackContext context);
         void OnMemorie(InputAction.CallbackContext context);
         void OnEsc(InputAction.CallbackContext context);
+        void OnScoutmode(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {

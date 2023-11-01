@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Scoutmode",
+                    "type": "Button",
+                    "id": "b3f90b4b-68ce-47f0-9d49-0042a18181d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -82,8 +91,30 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "left",
+                    "name": "up",
+                    "id": "7c4c8e84-ca2b-44ad-9e5c-36e40a596c60",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
                     "id": "957ac5a3-8743-4f29-9576-5d8939107bc2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "245b2263-2176-49ae-ac8b-d6ccef70113f",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -161,11 +192,22 @@
                 {
                     "name": "",
                     "id": "e46d4b96-f0e0-4aef-aff8-7290d534f874",
-                    "path": "<Keyboard>/m",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b73cbea-a2a7-4989-b04e-553ef119bcfc",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scoutmode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

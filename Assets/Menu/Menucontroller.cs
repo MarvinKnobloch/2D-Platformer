@@ -30,14 +30,16 @@ public class Menucontroller : MonoBehaviour
             Time.timeScale = 0f;
             Time.fixedDeltaTime = 0f;
             menu.SetActive(true);
+            menuoverview.SetActive(true);
         }
-        else if(controlls.Menu.Openmenu.WasPerformedThisFrame() && menuoverview.activeSelf == true)
+        else if(controlls.Menu.Openmenu.WasPerformedThisFrame() && menuoverview.activeSelf == true && menu.activeSelf == true)     //menu.activeSelf == true weil menuoverview als aktiv gilt selbst wenn der parent disabled ist
         {
             closemenu();
         }
     }
     public void closemenu()
     {
+        menuoverview.SetActive(false);
         Globalcalls.gameispaused = false;
         Time.timeScale = normaltimescale;
         Time.fixedDeltaTime = normalfixeddeltatime;
