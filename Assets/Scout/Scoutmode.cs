@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Scoutmode : MonoBehaviour
 {
+    [SerializeField] private Camera maincam;
     private Controlls controls;
 
     private Rigidbody2D rb;
@@ -28,6 +29,18 @@ public class Scoutmode : MonoBehaviour
 
     void Update()
     {
+        if (controls.Player.Move.WasPerformedThisFrame())
+        { 
+            if(move.x == 0)
+            {
+                transform.position = new Vector3(maincam.transform.position.x, transform.position.y, 0);
+            }
+            if(move.y == 0)
+            {
+                transform.position = new Vector3(transform.position.x, maincam.transform.position.y, 0);
+            }
+        }
+
         moveinput();
         scoutvelocity.Set(move.x * scoutspeed, move.y * scoutspeed);
         rb.velocity = scoutvelocity;

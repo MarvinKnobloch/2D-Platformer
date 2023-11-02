@@ -8,6 +8,7 @@ public static class Globalcalls
 
     public static bool jumpcantriggerswitch;
     public static Vector3 playeresetpoint;
+    public static GameObject boundscolliderobj;
 
     public static int currentgravitystacks;
     public static int currentmemorystacks;

@@ -19,13 +19,15 @@ public class Playerresetzone : MonoBehaviour
     }
     IEnumerator playerreset(GameObject player)
     {
-        player.GetComponent<Playerstatemachine>().move = Vector2.zero;
-        player.GetComponent<Playerstatemachine>().resetplayer();
+        Playerstatemachine playerstatemachine = player.GetComponent<Playerstatemachine>();
+        playerstatemachine.move = Vector2.zero;
+        playerstatemachine.resetplayer();
         player.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         player.SetActive(true);
         player.transform.position = Globalcalls.playeresetpoint;
-        player.GetComponent<Playerstatemachine>().resetplayer();
+        playerstatemachine.cinemachineConfiner.m_BoundingShape2D = Globalcalls.boundscolliderobj.GetComponent<PolygonCollider2D>();
+        playerstatemachine.resetplayer();
         if (moveonenterplatforms.Length != 0)
         {
             for (int i = 0; i < moveonenterplatforms.Length; i++)

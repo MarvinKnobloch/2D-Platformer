@@ -109,7 +109,7 @@ public class Playerstatemachine : MonoBehaviour
         movehotkey = controlls.Player.Move;
 
         switchtogroundstate();
-
+        
         playermovement.psm = this;
         playercollider.psm = this;
         playergravityswitch.psm = this;
@@ -117,6 +117,8 @@ public class Playerstatemachine : MonoBehaviour
         playermemories.psm = this;
 
         Globalcalls.playeresetpoint = transform.position;
+        if (cinemachineConfiner.m_BoundingShape2D != null) Globalcalls.boundscolliderobj = cinemachineConfiner.m_BoundingShape2D.gameObject;
+
     }
     private void OnEnable()
     {

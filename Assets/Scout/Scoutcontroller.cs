@@ -13,6 +13,7 @@ public class Scoutcontroller : MonoBehaviour
     [SerializeField] private GameObject player;
 
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtual;
+    [SerializeField] private Camera maincam;
     private void Awake()
     {
         controlls = Keybindinputmanager.inputActions;
@@ -27,8 +28,10 @@ public class Scoutcontroller : MonoBehaviour
                 {
                     Globalcalls.gameispaused = true;
                     scoutobj.SetActive(true);
-                    scouttarget.transform.position = player.transform.position;
+                    scouttarget.transform.position = new Vector3(maincam.transform.position.x, maincam.transform.position.y, 0);
                     cinemachineVirtual.Follow = scouttarget.transform;
+                    cinemachineVirtual.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneWidth = 0;
+                    cinemachineVirtual.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 0;
                     return;
                 }
                 else if (scoutobj.activeSelf == true) StartCoroutine("closescoutmode");
@@ -44,6 +47,8 @@ public class Scoutcontroller : MonoBehaviour
         yield return null;
         Globalcalls.gameispaused = false;
         scoutobj.SetActive(false);
+        cinemachineVirtual.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneWidth = 0.8f;
+        cinemachineVirtual.GetCinemachineComponent<CinemachineFramingTransposer>().m_SoftZoneHeight = 0.8f;
         cinemachineVirtual.Follow = player.transform;
     }
 }
