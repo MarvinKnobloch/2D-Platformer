@@ -27,6 +27,7 @@ public class Playerresetzone : MonoBehaviour
         player.SetActive(true);
         player.transform.position = Globalcalls.playeresetpoint;
         playerstatemachine.cinemachineConfiner.m_BoundingShape2D = Globalcalls.boundscolliderobj.GetComponent<PolygonCollider2D>();
+        playerstatemachine.cinemachineVirtualCamera.m_Lens.OrthographicSize = Globalcalls.savecameradistance;
         playerstatemachine.resetplayer();
         if (moveonenterplatforms.Length != 0)
         {

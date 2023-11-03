@@ -8,6 +8,7 @@ using Cinemachine;
 public class Playerstatemachine : MonoBehaviour
 {
     [NonSerialized] public Controlls controlls;
+    public CinemachineVirtualCamera cinemachineVirtualCamera;
     public CinemachineConfiner cinemachineConfiner;
 
     [NonSerialized] public Rigidbody2D rb;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Menucontroller : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Menucontroller : MonoBehaviour
     [SerializeField] private GameObject menuoverview;
     private float normaltimescale;
     private float normalfixeddeltatime;
+
+    public static event Action tutorialupdate;
+
 
     private void Awake()
     {
@@ -39,10 +43,12 @@ public class Menucontroller : MonoBehaviour
     }
     public void closemenu()
     {
+        tutorialupdate?.Invoke();
         menuoverview.SetActive(false);
         Globalcalls.gameispaused = false;
         Time.timeScale = normaltimescale;
         Time.fixedDeltaTime = normalfixeddeltatime;
         menu.SetActive(false);
+        
     }
 }
