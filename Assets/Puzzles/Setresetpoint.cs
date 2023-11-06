@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using TMPro;
 
 public class Setresetpoint : MonoBehaviour
 {
@@ -28,6 +28,16 @@ public class Setresetpoint : MonoBehaviour
             Globalcalls.playeresetpoint = resetposi;
             Globalcalls.boundscolliderobj = sectionobj;
             Globalcalls.savecameradistance = camdistance;
+            if(Globalcalls.currentsavebutton == null) gameObject.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+            else
+            {
+                if (Globalcalls.currentsavebutton != gameObject)
+                {
+                    Globalcalls.currentsavebutton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                    gameObject.GetComponentInChildren<TextMeshProUGUI>().color = Color.black;
+                }
+            }
+            Globalcalls.currentsavebutton = gameObject;
         }
             
     }

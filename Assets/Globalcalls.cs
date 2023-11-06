@@ -9,6 +9,8 @@ public static class Globalcalls
     public static bool jumpcantriggerswitch;
 
     public static Vector3 playeresetpoint;
+    public static GameObject currentsavebutton;
+
     public static GameObject boundscolliderobj;
     public static int savecameradistance = 8;
 
