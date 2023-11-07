@@ -4,12 +4,12 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 
-public class Hooktutorial : MonoBehaviour
+public class Memorytutorial : MonoBehaviour
 {
     private TextMeshProUGUI tutorialtext;
     private Controlls controls;
 
-    private string wipehotkey;
+    private string memoryhotkey;
 
     private void Awake()
     {
@@ -28,9 +28,9 @@ public class Hooktutorial : MonoBehaviour
 
     private void hotkeysandtextupdate()
     {
-        wipehotkey = controls.Player.Whip.GetBindingDisplayString();
-        tutorialtext.text = "Press <color=green>" + wipehotkey + "</color> to use the whip.\n" +
-                            "If your character is close enough to a whip point it will turn green and can be used. The green point also determine which is your current whip target.\n" +
-                            "Being below a wipe point will pull your character more upwards";
+        memoryhotkey = controls.Player.Memorie.GetBindingDisplayString();
+        tutorialtext.text = "After stepping on the \"M\" press <color=green>" + memoryhotkey + "</color> to place a memory of your character.\n" +
+                            "This memory will remain a few seconds or until you use this ability again which will teleport you back to the position of the memory.\n" + 
+                            "The number on the bottom left will display how often you can use this ability.";
     }
 }

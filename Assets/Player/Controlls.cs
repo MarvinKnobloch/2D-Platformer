@@ -64,7 +64,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Hook"",
+                    ""name"": ""Whip"",
                     ""type"": ""Button"",
                     ""id"": ""e5cd0e15-bc67-4f21-838f-f6614aa4656f"",
                     ""expectedControlType"": ""Button"",
@@ -196,7 +196,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Hook"",
+                    ""action"": ""Whip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -333,7 +333,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Gravityswitch = m_Player.FindAction("Gravityswitch", throwIfNotFound: true);
-        m_Player_Hook = m_Player.FindAction("Hook", throwIfNotFound: true);
+        m_Player_Whip = m_Player.FindAction("Whip", throwIfNotFound: true);
         m_Player_Memorie = m_Player.FindAction("Memorie", throwIfNotFound: true);
         m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
         m_Player_Scoutmode = m_Player.FindAction("Scoutmode", throwIfNotFound: true);
@@ -403,7 +403,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Gravityswitch;
-    private readonly InputAction m_Player_Hook;
+    private readonly InputAction m_Player_Whip;
     private readonly InputAction m_Player_Memorie;
     private readonly InputAction m_Player_Esc;
     private readonly InputAction m_Player_Scoutmode;
@@ -415,7 +415,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Gravityswitch => m_Wrapper.m_Player_Gravityswitch;
-        public InputAction @Hook => m_Wrapper.m_Player_Hook;
+        public InputAction @Whip => m_Wrapper.m_Player_Whip;
         public InputAction @Memorie => m_Wrapper.m_Player_Memorie;
         public InputAction @Esc => m_Wrapper.m_Player_Esc;
         public InputAction @Scoutmode => m_Wrapper.m_Player_Scoutmode;
@@ -440,9 +440,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Gravityswitch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGravityswitch;
                 @Gravityswitch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGravityswitch;
                 @Gravityswitch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGravityswitch;
-                @Hook.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
-                @Hook.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
-                @Hook.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHook;
+                @Whip.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWhip;
+                @Whip.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWhip;
+                @Whip.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWhip;
                 @Memorie.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMemorie;
                 @Memorie.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMemorie;
                 @Memorie.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMemorie;
@@ -468,9 +468,9 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
                 @Gravityswitch.started += instance.OnGravityswitch;
                 @Gravityswitch.performed += instance.OnGravityswitch;
                 @Gravityswitch.canceled += instance.OnGravityswitch;
-                @Hook.started += instance.OnHook;
-                @Hook.performed += instance.OnHook;
-                @Hook.canceled += instance.OnHook;
+                @Whip.started += instance.OnWhip;
+                @Whip.performed += instance.OnWhip;
+                @Whip.canceled += instance.OnWhip;
                 @Memorie.started += instance.OnMemorie;
                 @Memorie.performed += instance.OnMemorie;
                 @Memorie.canceled += instance.OnMemorie;
@@ -568,7 +568,7 @@ public partial class @Controlls : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnGravityswitch(InputAction.CallbackContext context);
-        void OnHook(InputAction.CallbackContext context);
+        void OnWhip(InputAction.CallbackContext context);
         void OnMemorie(InputAction.CallbackContext context);
         void OnEsc(InputAction.CallbackContext context);
         void OnScoutmode(InputAction.CallbackContext context);

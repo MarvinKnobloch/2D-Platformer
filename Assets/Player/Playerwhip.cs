@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Playerhook
+public class Playerwhip
 {
     public Playerstatemachine psm;
     private float hooktargetupdatetime;
@@ -21,7 +21,7 @@ public class Playerhook
         if (Hookobject.hookobjects.Count > 0 && psm.inhookstate == false)
         {
             hooktargetupdate();
-            if (psm.controlls.Player.Hook.WasPerformedThisFrame())
+            if (psm.controlls.Player.Whip.WasPerformedThisFrame())
             {
                 checkforclosesthook();
                 hookplayer();

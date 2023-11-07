@@ -86,7 +86,7 @@ public class Playerstatemachine : MonoBehaviour
     private Playermovement playermovement = new Playermovement();
     private Playercollider playercollider = new Playercollider();
     private Playergravityswitch playergravityswitch = new Playergravityswitch();
-    private Playerhook playerhook = new Playerhook();
+    private Playerwhip playerhook = new Playerwhip();
     private Playermemories playermemories = new Playermemories();
 
     public States state;
@@ -240,6 +240,7 @@ public class Playerstatemachine : MonoBehaviour
         doublejump = false;
         Globalcalls.jumpcantriggerswitch = true;
         isjumping = false;
+        inair = false;
         state = States.Ground;
         if (isonplatform == false)
         {

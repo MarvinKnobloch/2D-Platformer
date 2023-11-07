@@ -32,6 +32,6 @@ public class Gravitytutorial : MonoBehaviour
         tutorialtext.text = "Step on the \"S\" button to the save your postion.\n" +
                             "Black zone = death zone and you will be ported back to your last save postion.\n" +
                             "\nAfter stepping on the \"G\" press <color=green>" + gravityhotkey + "</color> to switch gravity.\n" +
-                            "The number on the bottom left will display how often you can this ability.";
+                            "The number on the bottom left will display how often you can use this ability.";
     }
 }

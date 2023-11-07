@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Hook",
+                    "name": "Whip",
                     "type": "Button",
                     "id": "e5cd0e15-bc67-4f21-838f-f6614aa4656f",
                     "expectedControlType": "Button",
@@ -174,7 +174,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Hook",
+                    "action": "Whip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
