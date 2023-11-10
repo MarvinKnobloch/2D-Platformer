@@ -49,12 +49,12 @@ public class Movingbackground : MonoBehaviour
     private void LateUpdate()
     {
         distance = cam.position.x - camstartposi.x;
-        transform.position = new Vector3(cam.position.x, transform.position.y, 0);
+        transform.position = new Vector3(cam.position.x, cam.position.y, 0);
 
         for (int i = 0; i < backgrounds.Length; i++)
         {
-            float speed = backspeed[i] * backgroundspeed;
-            mats[i].SetTextureOffset("Maintext", new Vector2(distance, 0) * speed);
+            float speed = backspeed[i] * backgroundspeed * 0.1f;
+            mats[i].SetTextureOffset("_MainTex", new Vector2(distance, 0) * speed);
         }
     }
 }

@@ -10,7 +10,9 @@ public class Makeplayerchildofplatform : MonoBehaviour
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        boxCollider.size = new Vector2(transform.GetChild(0).transform.localScale.x * 0.96f, transform.GetChild(0).transform.localScale.y);
+        float xsize = transform.GetChild(0).GetComponent<SpriteRenderer>().size.x;
+        boxCollider.size = new Vector2(xsize * 0.96f, transform.GetChild(0).transform.localScale.y);
+        transform.GetChild(0).GetComponent<BoxCollider2D>().size = new Vector2(xsize, 1);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
