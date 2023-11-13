@@ -8,13 +8,16 @@ public class Platformstate : MonoBehaviour
     [SerializeField] private bool isactivonstart;
     private bool isactiv;
     private SpriteRenderer spriteRenderer;
-    private Color inactivcolor;
+    private Color activecolor;
+    private Color inactivecolor;
     private BoxCollider2D[] boxcolliders;
 
     private void Awake()
     {
-        ColorUtility.TryParseHtmlString("#840000", out inactivcolor);
-        inactivcolor.a = 0.3f;
+        ColorUtility.TryParseHtmlString("#FFFFFF", out activecolor);
+        activecolor.a = 1;
+        ColorUtility.TryParseHtmlString("#FFFFFF", out inactivecolor);
+        inactivecolor.a = 0.3f;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         boxcolliders = GetComponentsInChildren<BoxCollider2D>();
     }
@@ -36,7 +39,7 @@ public class Platformstate : MonoBehaviour
     private void switchtoactive()
     {
         isactiv = true;
-        spriteRenderer.color = Color.white;
+        spriteRenderer.color = activecolor;
         foreach (BoxCollider2D cols in boxcolliders)
         {
             cols.enabled = true;
@@ -45,7 +48,7 @@ public class Platformstate : MonoBehaviour
     private void switchtonotactive()
     {
         isactiv = false;
-        spriteRenderer.color = inactivcolor;
+        spriteRenderer.color = inactivecolor;
         foreach (BoxCollider2D cols in boxcolliders)
         {
             cols.enabled = false;

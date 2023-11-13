@@ -11,8 +11,8 @@ public class Camerahorizontal : MonoBehaviour
     [SerializeField] private CinemachineConfiner cinemachineConfiner;
     private Collider2D Collider2D;
 
-    [SerializeField] private int bottomcameradistance;
-    [SerializeField] private int topcameradistance;
+    [SerializeField] private float bottomcameradistance;
+    [SerializeField] private float topcameradistance;
 
     private void Awake()
     {
