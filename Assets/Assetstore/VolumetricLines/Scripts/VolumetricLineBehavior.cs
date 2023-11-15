@@ -382,14 +382,14 @@ namespace VolumetricLines
 			DestroyMaterial();
 		}
 		
-		void Update()
-		{
-			if (transform.hasChanged)
-			{
-				//UpdateLineScale();
-				//UpdateBounds();
-			}
-		}
+		//void Update()
+		//{
+		//	if (transform.hasChanged)
+		//	{
+		//		//UpdateLineScale();
+		//		//UpdateBounds();
+		//	}
+		//}
 
 		void OnValidate()
 		{
@@ -406,7 +406,7 @@ namespace VolumetricLines
 		void OnDrawGizmos()
 		{
 			Gizmos.color = Color.green;
-			Gizmos.DrawLine(gameObject.transform.TransformPoint(m_startPos), gameObject.transform.TransformPoint(m_endPos));
+			//Gizmos.DrawLine(gameObject.transform.TransformPoint(m_startPos), gameObject.transform.TransformPoint(m_endPos));
 		}
 		#endregion
 	}
