@@ -51,7 +51,7 @@ public class Playerwhip
                 float objectdistance;
                 for (int i = 0; i < Hookobject.hookobjects.Count; i++)
                 {
-                    Hookobject.hookobjects[i].GetComponent<SpriteRenderer>().color = Color.red;
+                    Hookobject.hookobjects[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
                     objectdistance = Vector3.Distance(psm.transform.position, Hookobject.hookobjects[i].transform.position);
                     if (currentclosestdistance > objectdistance)
                     {
@@ -59,7 +59,7 @@ public class Playerwhip
                         psm.hooktarget = Hookobject.hookobjects[i];
                     }
                 }
-                psm.hooktarget.GetComponent<SpriteRenderer>().color = Color.green;
+                psm.hooktarget.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.yellow;
             }
         }
         else
@@ -70,7 +70,7 @@ public class Playerwhip
     private void hookplayer()
     {
         Hookobject.hookobjects.Remove(psm.hooktarget);
-        psm.hooktarget.GetComponent<SpriteRenderer>().color = Color.red;
+        psm.hooktarget.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
         psm.inhookstate = true;
         psm.hookstartposition = psm.transform.position;
         psm.hookstarttime = 0;

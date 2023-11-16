@@ -10,7 +10,7 @@ public class Hookobject : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,7 +44,7 @@ public class Hookobject : MonoBehaviour
             reactivatetimer = 0;
             hookobjects.Remove(gameObject);
             collision.gameObject.GetComponent<Playerstatemachine>().hooktargetupdate();
-            spriteRenderer.color = Color.red;
+            spriteRenderer.color = Color.white;
         }
     }
 }
