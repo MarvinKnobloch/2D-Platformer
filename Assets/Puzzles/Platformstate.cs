@@ -17,7 +17,7 @@ public class Platformstate : MonoBehaviour
         ColorUtility.TryParseHtmlString("#FFFFFF", out activecolor);
         activecolor.a = 1;
         ColorUtility.TryParseHtmlString("#FFFFFF", out inactivecolor);
-        inactivecolor.a = 0.3f;
+        inactivecolor.a = 0.35f;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         boxcolliders = GetComponentsInChildren<BoxCollider2D>();
     }
