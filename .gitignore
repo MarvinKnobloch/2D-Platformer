@@ -2862,3 +2862,15 @@ Assets/2D Pixel Art Platformer Biome - Plains/Newcavetilemap.png
 Assets/2D Pixel Art Platformer Biome - Plains/Cavetilemap.png
 Assets/2D Pixel Art Platformer Biome - Plains/Cavesprites.png
 Assets/2D Pixel Art Platformer Biome - Plains/Atlas.spriteatlas
+*.mat
+*.fbx
+*.cs
+*.tga
+*.asmdef
+*.uxml
+*.uss
+*.shader
+*.cginc
+*.pdb
+*.pdb
+Library/ScriptAssemblies/UnityEditor.TestRunner.dll
