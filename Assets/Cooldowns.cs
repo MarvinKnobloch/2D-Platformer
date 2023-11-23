@@ -10,11 +10,9 @@ public class Cooldowns : MonoBehaviour
 
     [SerializeField] private GameObject gravitystacksui;
     [SerializeField] private TextMeshProUGUI gravitystacks;
-    private Color gravityuicolor;
 
     [SerializeField] private GameObject memoriestacksui;
     [SerializeField] private TextMeshProUGUI memoriestacks;
-    private Color memorieuicolor;
 
     private void Awake()
     {
@@ -34,14 +32,10 @@ public class Cooldowns : MonoBehaviour
     IEnumerator disableonawake()                    //damit bild und text geladen werden, sonst ensteht ein spike wenn das image das erste mal aktiviert wird
     {
         yield return new WaitForSeconds(0.03f);
-        gravityuicolor = gravitystacksui.GetComponent<Image>().color;
-        gravityuicolor.a = 1;
-        gravitystacksui.GetComponent<Image>().color = gravityuicolor;
+        gravitystacksui.transform.localScale = new Vector3(1, 1, 1);
         if (Globalcalls.currentgravitystacks == 0) gravitystacksui.SetActive(false);
 
-        memorieuicolor = memoriestacksui.GetComponent<Image>().color;
-        memorieuicolor.a = 1;
-        memoriestacksui.GetComponent<Image>().color = memorieuicolor;
+        memoriestacksui.transform.localScale = new Vector3(1, 1, 1);
         if (Globalcalls.currentmemorystacks == 0) memoriestacksui.SetActive(false);
 
     }
