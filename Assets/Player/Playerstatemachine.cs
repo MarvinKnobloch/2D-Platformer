@@ -11,6 +11,11 @@ public class Playerstatemachine : MonoBehaviour
     public CinemachineVirtualCamera cinemachineVirtualCamera;
     public CinemachineConfiner cinemachineConfiner;
 
+    //animation;
+    [NonSerialized] public Animator animator;
+    public string currentstate;
+    const string idlestate = "Idle";
+
     [NonSerialized] public Rigidbody2D rb;
 
     private InputAction movehotkey;
@@ -108,6 +113,10 @@ public class Playerstatemachine : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         controlls = Keybindinputmanager.inputActions;
         movehotkey = controlls.Player.Move;
+
+        //animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        currentstate = idlestate;
 
         switchtogroundstate();
         
@@ -229,10 +238,12 @@ public class Playerstatemachine : MonoBehaviour
             }
         }
     }
-    /*public void OnMove(InputValue inputvalue)
+    public void ChangeAnimationState(string newstate)
     {
-        move.x = inputvalue.Get<Vector2>().x;
-    }*/
+        if (currentstate == newstate) return;
+        animator.CrossFadeInFixedTime(newstate, 0.1f);
+        currentstate = newstate;
+    }
     public void switchtogroundstate()
     {
         currentdashcount = 0;

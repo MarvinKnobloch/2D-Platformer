@@ -7,6 +7,12 @@ public class Playermovement
 {
     public Playerstatemachine psm;
 
+    const string idlestate = "Idle";
+    const string runstate = "Run";
+    const string jumpstate = "Jump";
+    const string dashstate = "Dash";
+    const string fallstate = "Fall";
+
     public void playergroundmovement()
     {
         if (psm.standonslope == true)
@@ -28,16 +34,27 @@ public class Playermovement
             //psm.rb.velocity = psm.rb.velocity = psm.playervelocity;
             psm.rb.velocity = psm.playervelocity;
         }
+        if(psm.move == Vector2.zero)
+        {
+            psm.ChangeAnimationState(idlestate);
+        }
+        else
+        {
+            psm.ChangeAnimationState(runstate);
+        }
     }
     public void playerairmovement()
     {
-        if(psm.gravityswitchactiv == false)
+        if (psm.gravityswitchactiv == false)
         {
+
+            if (psm.rb.velocity.y < 0) psm.ChangeAnimationState(fallstate);
             if (psm.rb.velocity.y < -25) psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, -25);
             else psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, psm.rb.velocity.y);
         }
         else
         {
+            if (psm.rb.velocity.y > 0) psm.ChangeAnimationState(fallstate);
             if (psm.rb.velocity.y > 25) psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, 25);
             else psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, psm.rb.velocity.y);
         }
@@ -51,6 +68,7 @@ public class Playermovement
     {
         if (psm.controlls.Player.Jump.WasPerformedThisFrame() && psm.canjump == true)
         {
+            psm.ChangeAnimationState(jumpstate);
             psm.canjump = false;
             psm.isjumping = true;
             psm.jumptime = psm.maxshortjumptime;
@@ -62,6 +80,7 @@ public class Playermovement
     {
         if (psm.controlls.Player.Jump.WasPerformedThisFrame() && psm.doublejump == true)
         {
+            psm.ChangeAnimationState(jumpstate);
             psm.rb.velocity = new Vector2(psm.rb.velocity.x, 0);
             Globalcalls.jumpcantriggerswitch = true;
             psm.doublejump = false;
@@ -137,6 +156,7 @@ public class Playermovement
     }
     private void startdash()
     {
+        psm.ChangeAnimationState(dashstate);
         psm.isjumping = false;
         psm.rb.velocity = new Vector2(0, 0);
         psm.rb.sharedMaterial = psm.nofriction;
@@ -163,6 +183,7 @@ public class Playermovement
         {
             psm.rb.gravityScale = psm.groundgravityscale;
             psm.rb.velocity = new Vector2(psm.rb.velocity.x, 0);
+            psm.ChangeAnimationState(fallstate);
             psm.switchtoairstate();
         }
     }
