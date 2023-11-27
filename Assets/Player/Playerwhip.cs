@@ -16,6 +16,11 @@ public class Playerwhip
 
     private bool addvelocity;
 
+    const string whipstartstate = "Whipstart";
+    const string jumpstate = "Jump";
+    const string jumptofallstate = "Jumptofall";
+    const string fallstate = "Fall";
+
     public void playercheckforhook()
     {
         if (Hookobject.hookobjects.Count > 0 && psm.inhookstate == false)
@@ -28,7 +33,10 @@ public class Playerwhip
                 addvelocity = true;
                 psm.inair = true;
                 Globalcalls.jumpcantriggerswitch = true;
-                psm.state = Playerstatemachine.States.Hook;
+                //psm.ChangeAnimationState(whipstartstate);
+                psm.ChangeAnimationState(jumpstate);
+
+                psm.state = Playerstatemachine.States.Whip;
             }
         }
     }
@@ -78,6 +86,11 @@ public class Playerwhip
         psm.rb.velocity = Vector2.zero;
         if (psm.transform.position.x < psm.hooktarget.transform.position.x)
         {
+            if(psm.faceright == true)
+            {
+                psm.faceright = !psm.faceright;
+                psm.transform.Rotate(0, 180, 0);
+            }
             if (psm.gravityswitchactiv == false)
             {
                 angleposition = psm.hooktarget.transform.position - psm.transform.position;
@@ -101,6 +114,11 @@ public class Playerwhip
         }
         else
         {
+            if (psm.faceright == false)
+            {
+                psm.faceright = !psm.faceright;
+                psm.transform.Rotate(0, 180, 0);
+            }
             if (psm.gravityswitchactiv == false)
             {
                 angleposition = psm.hooktarget.transform.position - psm.transform.position;
@@ -204,7 +222,17 @@ public class Playerwhip
         {
             psm.xvelocityafterhook = psm.rb.velocity.x;
             psm.inhookstate = false;
-            psm.state = Playerstatemachine.States.Hookrelease;
+            if(psm.gravityswitchactiv == false)
+            {
+                if (psm.rb.velocity.y > 1.5f) psm.ChangeAnimationState(jumpstate);
+                else psm.ChangeAnimationState(fallstate);
+            }
+            else
+            {
+                if (psm.rb.velocity.y < -1.5f) psm.ChangeAnimationState(jumpstate);
+                else psm.ChangeAnimationState(fallstate);
+            }
+            psm.state = Playerstatemachine.States.Whiprelease;
         }
 
 
@@ -243,6 +271,16 @@ public class Playerwhip
             {
                 psm.switchtoairstate();
             }
+        }
+        if (psm.gravityswitchactiv == false)
+        {
+            if (psm.rb.velocity.y < -1.5f) psm.ChangeAnimationState(fallstate);
+            else if (psm.rb.velocity.y < 1.5f) psm.ChangeAnimationState(jumptofallstate);
+        }
+        else
+        {
+            if (psm.rb.velocity.y > 1.5f) psm.ChangeAnimationState(fallstate);
+            else if (psm.rb.velocity.y > -1.5f) psm.ChangeAnimationState(jumptofallstate);
         }
     }
 }

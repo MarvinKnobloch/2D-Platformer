@@ -11,6 +11,7 @@ public class Playermovement
     const string runstate = "Run";
     const string jumpstate = "Jump";
     const string dashstate = "Dash";
+    const string jumptofallstate = "Jumptofall";
     const string fallstate = "Fall";
 
     public void playergroundmovement()
@@ -47,14 +48,15 @@ public class Playermovement
     {
         if (psm.gravityswitchactiv == false)
         {
-
-            if (psm.rb.velocity.y < 0) psm.ChangeAnimationState(fallstate);
+            if (psm.rb.velocity.y < -1.5f) psm.ChangeAnimationState(fallstate);
+            else if (psm.rb.velocity.y < 1.5f) psm.ChangeAnimationState(jumptofallstate);
             if (psm.rb.velocity.y < -25) psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, -25);
             else psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, psm.rb.velocity.y);
         }
         else
         {
-            if (psm.rb.velocity.y > 0) psm.ChangeAnimationState(fallstate);
+            if (psm.rb.velocity.y > 1.5f) psm.ChangeAnimationState(fallstate);
+            else if (psm.rb.velocity.y > -1.5f) psm.ChangeAnimationState(jumptofallstate);
             if (psm.rb.velocity.y > 25) psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, 25);
             else psm.rb.velocity = new Vector2(psm.move.x * psm.movementspeed, psm.rb.velocity.y);
         }

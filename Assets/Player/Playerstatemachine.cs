@@ -101,8 +101,8 @@ public class Playerstatemachine : MonoBehaviour
         Groundintoair,
         Air,
         Dash,
-        Hook,
-        Hookrelease,
+        Whip,
+        Whiprelease,
         Slidewall,
         Infrontofwall,
         Empty,
@@ -152,11 +152,11 @@ public class Playerstatemachine : MonoBehaviour
                     break;
                 case States.Dash:
                     break;
-                case States.Hook:
+                case States.Whip:
                     playerhook.movetohookposition();
                     //playerhook.newmovetohookpostion();
                     break;
-                case States.Hookrelease:
+                case States.Whiprelease:
                     playerhook.hookreleasemovement();
                     break;
                 case States.Slidewall:
@@ -207,9 +207,9 @@ public class Playerstatemachine : MonoBehaviour
                 case States.Dash:
                     playermovement.playerdashstate();
                     break;
-                case States.Hook:
+                case States.Whip:
                     break;
-                case States.Hookrelease:
+                case States.Whiprelease:
                     playermovement.playerflip();
                     playercollider.playergroundcheckair();
                     playermovement.playercheckforairstate();

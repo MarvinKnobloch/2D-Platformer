@@ -6,6 +6,9 @@ public class Playercollider
 {
     public Playerstatemachine psm;
 
+    const string idlestate = "Idle";
+    const string runstate = "Run";
+
     public void playergroundcheck()
     {
         RaycastHit2D downwardhit = Physics2D.BoxCast(psm.groundcheckcollider.bounds.center, psm.groundcheckcollider.bounds.extents * 2f, 0, psm.transform.up * -1, 0.2f, psm.groundchecklayer);
@@ -136,5 +139,7 @@ public class Playercollider
             psm.groundcheck = false;
             psm.standonslope = false;
         }
+        if (psm.move == Vector2.zero) psm.ChangeAnimationState(idlestate);
+        else psm.ChangeAnimationState(runstate);
     }
 }
