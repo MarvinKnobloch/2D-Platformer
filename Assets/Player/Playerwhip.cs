@@ -35,6 +35,9 @@ public class Playerwhip
                 Globalcalls.jumpcantriggerswitch = true;
                 //psm.ChangeAnimationState(whipstartstate);
                 psm.ChangeAnimationState(jumpstate);
+                psm.lineRenderer.enabled = true;
+                psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
+                psm.lineRenderer.SetPosition(1, psm.hooktarget.transform.position);
 
                 psm.state = Playerstatemachine.States.Whip;
             }
@@ -232,6 +235,7 @@ public class Playerwhip
                 if (psm.rb.velocity.y < -1.5f) psm.ChangeAnimationState(jumpstate);
                 else psm.ChangeAnimationState(fallstate);
             }
+            psm.lineRenderer.enabled = false;
             psm.state = Playerstatemachine.States.Whiprelease;
         }
 
@@ -282,5 +286,9 @@ public class Playerwhip
             if (psm.rb.velocity.y > 1.5f) psm.ChangeAnimationState(fallstate);
             else if (psm.rb.velocity.y > -1.5f) psm.ChangeAnimationState(jumptofallstate);
         }
+    }
+    public void displaywhip()
+    {
+        psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
     }
 }

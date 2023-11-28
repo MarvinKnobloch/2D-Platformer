@@ -18,6 +18,7 @@ public class Playergravityswitch
             psm.transform.Rotate(180, 0, 0);
             if (psm.rb.gravityScale > 0) psm.rb.gravityScale = psm.airgravityscale * -1;
             else psm.rb.gravityScale = psm.airgravityscale;
+            psm.playersounds.playgravityswitch();
             platformrotate?.Invoke();
         }
     }

@@ -75,6 +75,8 @@ public class Playerstatemachine : MonoBehaviour
     public float hookradius;
     public float hookreleaseforce;
     public float xvelocityafterhook;
+    public Transform whipstartpoint;
+    public LineRenderer lineRenderer;
 
     //memorie
     public bool memoryisrunning;
@@ -87,6 +89,10 @@ public class Playerstatemachine : MonoBehaviour
     public Memorytimer memorycdobject;
 
     public bool gravityswitchactiv;
+
+    //sound
+    public Playersounds playersounds;
+
 
     private Playermovement playermovement = new Playermovement();
     private Playercollider playercollider = new Playercollider();
@@ -117,6 +123,9 @@ public class Playerstatemachine : MonoBehaviour
         //animator = GetComponent<Animator>();
         animator = GetComponentInChildren<Animator>();
         currentstate = idlestate;
+
+        lineRenderer = GetComponentInChildren<LineRenderer>();
+        lineRenderer.enabled = false;
 
         switchtogroundstate();
         
@@ -208,6 +217,7 @@ public class Playerstatemachine : MonoBehaviour
                     playermovement.playerdashstate();
                     break;
                 case States.Whip:
+                    playerhook.displaywhip();
                     break;
                 case States.Whiprelease:
                     playermovement.playerflip();
@@ -309,6 +319,7 @@ public class Playerstatemachine : MonoBehaviour
         groundcheckcollider.sharedMaterial = nofriction;
         StopCoroutine("usememory");
 
+        lineRenderer.enabled = false;
         rb.velocity = Vector2.zero;
         state = States.Air;
     }

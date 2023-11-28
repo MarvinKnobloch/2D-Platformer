@@ -154,10 +154,11 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Menu\KeyrebindUI.cs" />
-    <Compile Include="Assets\Gordo\Prefabs\DASkeleton\Scripts\DASkeleton.cs" />
-    <Compile Include="Assets\Gordo\Prefabs\DASkeleton\Scripts\DALimb.cs" />
-    <Compile Include="Assets\Gordo\Demo\Prefabs\DAChkBox\Scripts\DAChkBox.cs" />
-    <Compile Include="Assets\Gordo\Prefabs\DALogo\Scripts\DALogo.cs" />
+    <Compile Include="Assets\Audio\Volumecontroller.cs" />
+    <Compile Include="Assets\Menu\Limitfps.cs" />
+    <Compile Include="Assets\Audio\Playersounds.cs" />
+    <Compile Include="Assets\Audio\Playeranimationsounds.cs" />
+    <Compile Include="Assets\Audio\Musiccontroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -170,6 +171,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Assetstore\JMO Assets\Cartoon FX (legacy)\CartoonFX Free.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
+    <None Include="Assets\Assetstore\Warrior free set\License.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\Assetstore\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
@@ -203,6 +205,7 @@
     <None Include="Assets\Assetstore\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR_URP.cginc" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Assetstore\Warrior free set\Contact.txt" />
     <None Include="Assets\Assetstore\JMO Assets\Cartoon FX Remaster\CFXR Assets\Shaders\CFXR Particle Distortion.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
