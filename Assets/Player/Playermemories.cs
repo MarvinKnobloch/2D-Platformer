@@ -22,6 +22,7 @@ public class Playermemories
                 psm.playermemoryimage.SetActive(true);
                 psm.memorycdobject.transform.parent.gameObject.SetActive(true);
                 psm.memorycamera = psm.cinemachineConfiner.m_BoundingShape2D;
+                psm.playermemorysound.playmemory();
                 return;
             }
             if (psm.memoryisrunning == true)

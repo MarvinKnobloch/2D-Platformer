@@ -92,6 +92,7 @@ public class Playerstatemachine : MonoBehaviour
 
     //sound
     public Playersounds playersounds;
+    public Playersounds playermemorysound;
 
 
     private Playermovement playermovement = new Playermovement();

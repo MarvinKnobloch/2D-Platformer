@@ -73,6 +73,7 @@
     <Compile Include="Assets\Assetstore\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\Audio\Playeranimationsounds.cs" />
     <Compile Include="Assets\Menu\Menucontroller.cs" />
     <Compile Include="Assets\Assetstore\VolumetricLines\BuiltInRenderPipeline\ExampleScenes\ExampleScripts\CreateSinShapedLineStrip.cs" />
     <Compile Include="Assets\Assetstore\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
@@ -93,6 +94,8 @@
     <Compile Include="Assets\Puzzles\Addgravitystacks.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Assetstore\VolumetricLines\Scripts\VolumetricLineStripBehavior.cs" />
+    <Compile Include="Assets\Audio\Playersounds.cs" />
+    <Compile Include="Assets\Audio\Musiccontroller.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Menu\Settingcontroller.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Puzzles\Moveingplatformold.cs" />
+    <Compile Include="Assets\Audio\Volumecontroller.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scout\Scoutmode.cs" />
@@ -122,6 +126,7 @@
     <Compile Include="Assets\Puzzles\Hookobject.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Camera\Camerahorizontal.cs" />
+    <Compile Include="Assets\Menu\Limitfps.cs" />
     <Compile Include="Assets\Tutorials\Memorytutorial.cs" />
     <Compile Include="Assets\Cooldowns.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
@@ -154,11 +159,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Menu\KeyrebindUI.cs" />
-    <Compile Include="Assets\Audio\Volumecontroller.cs" />
-    <Compile Include="Assets\Menu\Limitfps.cs" />
-    <Compile Include="Assets\Audio\Playersounds.cs" />
-    <Compile Include="Assets\Audio\Playeranimationsounds.cs" />
-    <Compile Include="Assets\Audio\Musiccontroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

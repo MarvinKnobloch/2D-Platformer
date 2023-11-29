@@ -14,6 +14,10 @@ public class Cameravertical : MonoBehaviour
     [SerializeField] private float leftcameradistance;
     [SerializeField] private float rightcameradistance;
 
+    [SerializeField] private Musiccontroller musiccontroller;
+    [SerializeField] private AudioClip leftsidesong;
+    [SerializeField] private AudioClip rightsidesong;
+
     private void Awake()
     {
         Collider2D = GetComponent<Collider2D>();
@@ -27,11 +31,19 @@ public class Cameravertical : MonoBehaviour
             {
                 cinemachineConfiner.m_BoundingShape2D = leftcollider;
                 cinemachineVirtualCamera.m_Lens.OrthographicSize = leftcameradistance;
+                if(musiccontroller != null)
+                {
+                    musiccontroller.startfadeout(leftsidesong, 0, 1, 1);
+                }
             }
             else 
             { 
                 cinemachineConfiner.m_BoundingShape2D = rightcollider;
                 cinemachineVirtualCamera.m_Lens.OrthographicSize = rightcameradistance;
+                if (musiccontroller != null)
+                {
+                    musiccontroller.startfadeout(rightsidesong, 0, 1, 1);
+                }
             }
             
         }

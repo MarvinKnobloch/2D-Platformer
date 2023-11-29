@@ -17,7 +17,7 @@ public class Playerwhip
     private bool addvelocity;
 
     const string whipstartstate = "Whipstart";
-    const string jumpstate = "Jump";
+    const string jumpnosoundstate = "Jumpnosound";
     const string jumptofallstate = "Jumptofall";
     const string fallstate = "Fall";
 
@@ -33,8 +33,9 @@ public class Playerwhip
                 addvelocity = true;
                 psm.inair = true;
                 Globalcalls.jumpcantriggerswitch = true;
-                //psm.ChangeAnimationState(whipstartstate);
-                psm.ChangeAnimationState(jumpstate);
+                psm.ChangeAnimationState(whipstartstate);
+                psm.playersounds.playwhip();
+                //psm.ChangeAnimationState(jumpnosoundstate);
                 psm.lineRenderer.enabled = true;
                 psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
                 psm.lineRenderer.SetPosition(1, psm.hooktarget.transform.position);
@@ -227,12 +228,12 @@ public class Playerwhip
             psm.inhookstate = false;
             if(psm.gravityswitchactiv == false)
             {
-                if (psm.rb.velocity.y > 1.5f) psm.ChangeAnimationState(jumpstate);
+                if (psm.rb.velocity.y > 1.5f) psm.ChangeAnimationState(jumpnosoundstate);
                 else psm.ChangeAnimationState(fallstate);
             }
             else
             {
-                if (psm.rb.velocity.y < -1.5f) psm.ChangeAnimationState(jumpstate);
+                if (psm.rb.velocity.y < -1.5f) psm.ChangeAnimationState(jumpnosoundstate);
                 else psm.ChangeAnimationState(fallstate);
             }
             psm.lineRenderer.enabled = false;
@@ -242,6 +243,7 @@ public class Playerwhip
 
         if (psm.hookstarttime > 0.5f)//0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
         {
+            psm.lineRenderer.enabled = false;
             psm.inhookstate = false;
             psm.switchtoairstate();
         }

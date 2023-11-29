@@ -6,11 +6,20 @@ public class Addgravitystacks : MonoBehaviour
 {
     public int stackcount;
     [SerializeField] private bool triggerwhennormalgravity;
+
+    private ParticleSystem particlesystem;
+
+    private void Awake()
+    {
+        particlesystem = GetComponentInChildren<ParticleSystem>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            if(triggerwhennormalgravity == true)
+            particlesystem.Stop();
+            particlesystem.gameObject.SetActive(false);
+            if (triggerwhennormalgravity == true)
             {
                 if (collision.gameObject.GetComponent<Playerstatemachine>().gravityswitchactiv == false)
                 {
@@ -26,6 +35,14 @@ public class Addgravitystacks : MonoBehaviour
                     Cooldowns.instance.displaygravitystacks();
                 }
             }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            particlesystem.gameObject.SetActive(true);
+            particlesystem.Play();
         }
     }
 }

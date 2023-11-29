@@ -75,6 +75,7 @@ public class Playermovement
             psm.isjumping = true;
             psm.jumptime = psm.maxshortjumptime;
             psm.groundintoairswitch();
+            psm.playersounds.playjump();
             playerupwardsmomentum(psm.jumpheight);
         }
     }
@@ -88,6 +89,7 @@ public class Playermovement
             psm.doublejump = false;
             psm.isjumping = true;
             psm.jumptime = psm.maxshortjumptime;
+            psm.playersounds.playjump();
             playerupwardsmomentum(psm.jumpheight);
         }
     }
