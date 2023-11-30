@@ -14,6 +14,17 @@ public class Playerwhip
     private bool playerisonleftsideofhookobject;
     private bool playerisrightofhookendposition;
 
+    private int percision = 40;
+    private float straightenLineSpeed = 10;
+    private float StartWaveSize = 2;
+    private float waveSize = 0;
+    private Vector3 whipdistance;
+
+    private float whipProgressionSpeed = 10;
+
+    float movetime = 0;
+    private bool drawwhipwaves;
+
     private bool addvelocity;
 
     const string whipstartstate = "Whipstart";
@@ -30,13 +41,25 @@ public class Playerwhip
             {
                 checkforclosesthook();
                 hookplayer();
+
                 addvelocity = true;
                 psm.inair = true;
                 Globalcalls.jumpcantriggerswitch = true;
                 psm.ChangeAnimationState(whipstartstate);
                 psm.playersounds.playwhip();
                 //psm.ChangeAnimationState(jumpnosoundstate);
+
+                psm.lineRenderer.positionCount = percision;
+                for (int i = 0; i < percision; i++)
+                {
+                    psm.lineRenderer.SetPosition(i, psm.whipstartpoint.position);
+                }
+                movetime = 0;
+                drawwhipwaves = true;
+                psm.lineRenderer.positionCount = percision;
+                waveSize = StartWaveSize;
                 psm.lineRenderer.enabled = true;
+                whipdistance = psm.hooktarget.transform.position - psm.whipstartpoint.position;
                 psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
                 psm.lineRenderer.SetPosition(1, psm.hooktarget.transform.position);
 
@@ -291,6 +314,53 @@ public class Playerwhip
     }
     public void displaywhip()
     {
-        psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
+        if (drawwhipwaves == true)
+        {
+            if (psm.lineRenderer.GetPosition(percision - 1).x == psm.hooktarget.transform.position.x)
+            {
+                drawwhipwaves = false;
+            }
+            else
+            {
+                finalwhipdisplay();
+            }
+        }
+        else
+        {
+            if (waveSize > 0)
+            {
+                waveSize -= Time.deltaTime * straightenLineSpeed;
+                finalwhipdisplay();
+            }
+            else
+            {
+                waveSize = 0;
+
+                if (psm.lineRenderer.positionCount != 2) { psm.lineRenderer.positionCount = 2; }
+
+                finalwhipdisplay();
+            }
+        }
+    }
+    private void finalwhipdisplay()
+    {
+        movetime += Time.deltaTime;
+        if (drawwhipwaves == true)
+        {
+            for (int i = 0; i < percision; i++)
+            {
+                float delta = (float)i / ((float)percision - 1f);
+                Vector2 offset = Vector2.Perpendicular(whipdistance).normalized * psm.ropeAnimationCurve.Evaluate(delta) * waveSize;
+                Vector2 targetPosition = Vector2.Lerp(psm.whipstartpoint.position, psm.hooktarget.transform.position, delta) + offset;
+                Vector2 currentPosition = Vector2.Lerp(psm.whipstartpoint.position, targetPosition, psm.ropeProgressionCurve.Evaluate(movetime) * whipProgressionSpeed);
+
+                psm.lineRenderer.SetPosition(i, currentPosition);
+            }
+        }
+        else
+        {
+            psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
+
+        }
     }
 }

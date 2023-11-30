@@ -15,6 +15,8 @@ public class Movingbackground : MonoBehaviour
     private float farthestback;
     [Range(0.1f, 6f)] public float backgroundspeed;
 
+    private bool dontupdateafterreset;
+
     private void Awake()
     {
         cam = Camera.main.transform;

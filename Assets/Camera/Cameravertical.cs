@@ -16,7 +16,11 @@ public class Cameravertical : MonoBehaviour
 
     [SerializeField] private Musiccontroller musiccontroller;
     [SerializeField] private AudioClip leftsidesong;
+    [Range(0.1f , 1)]
+    [SerializeField] private float leftsidevolume;
     [SerializeField] private AudioClip rightsidesong;
+    [Range(0.1f, 1)]
+    [SerializeField] private float rightsidevolume;
 
     private void Awake()
     {
@@ -33,7 +37,7 @@ public class Cameravertical : MonoBehaviour
                 cinemachineVirtualCamera.m_Lens.OrthographicSize = leftcameradistance;
                 if(musiccontroller != null)
                 {
-                    musiccontroller.startfadeout(leftsidesong, 0, 1, 1);
+                    musiccontroller.startfadeout(leftsidesong, 0, 1, 1, leftsidevolume);
                 }
             }
             else 
@@ -42,7 +46,7 @@ public class Cameravertical : MonoBehaviour
                 cinemachineVirtualCamera.m_Lens.OrthographicSize = rightcameradistance;
                 if (musiccontroller != null)
                 {
-                    musiccontroller.startfadeout(rightsidesong, 0, 1, 1);
+                    musiccontroller.startfadeout(rightsidesong, 0, 1, 1, rightsidevolume);
                 }
             }
             

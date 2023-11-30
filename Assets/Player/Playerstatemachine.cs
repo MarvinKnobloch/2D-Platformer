@@ -77,6 +77,8 @@ public class Playerstatemachine : MonoBehaviour
     public float xvelocityafterhook;
     public Transform whipstartpoint;
     public LineRenderer lineRenderer;
+    public AnimationCurve ropeAnimationCurve;
+    public AnimationCurve ropeProgressionCurve;
 
     //memorie
     public bool memoryisrunning;
@@ -93,6 +95,9 @@ public class Playerstatemachine : MonoBehaviour
     //sound
     public Playersounds playersounds;
     public Playersounds playermemorysound;
+
+    //background
+    [SerializeField] private Movingbackground background;
 
 
     private Playermovement playermovement = new Playermovement();
@@ -164,7 +169,6 @@ public class Playerstatemachine : MonoBehaviour
                     break;
                 case States.Whip:
                     playerhook.movetohookposition();
-                    //playerhook.newmovetohookpostion();
                     break;
                 case States.Whiprelease:
                     playerhook.hookreleasemovement();
