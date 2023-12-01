@@ -7,6 +7,7 @@ public class Settingcontroller : MonoBehaviour
     private Controlls controlls;
 
     [SerializeField] private GameObject menuoverview;
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class Settingcontroller : MonoBehaviour
         {
             menuoverview.SetActive(true);
             gameObject.SetActive(false);
+            menusoundcontroller.playmenusound1();
         }
     }
 }

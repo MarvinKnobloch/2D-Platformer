@@ -79,6 +79,7 @@ public class Playerstatemachine : MonoBehaviour
     public LineRenderer lineRenderer;
     public AnimationCurve ropeAnimationCurve;
     public AnimationCurve ropeProgressionCurve;
+    public Color whippointcolor;
 
     //memorie
     public bool memoryisrunning;
@@ -113,6 +114,7 @@ public class Playerstatemachine : MonoBehaviour
         Groundintoair,
         Air,
         Dash,
+        Throwwhip,
         Whip,
         Whiprelease,
         Slidewall,
@@ -167,6 +169,8 @@ public class Playerstatemachine : MonoBehaviour
                     break;
                 case States.Dash:
                     break;
+                case States.Throwwhip:
+                    break;
                 case States.Whip:
                     playerhook.movetohookposition();
                     break;
@@ -220,6 +224,10 @@ public class Playerstatemachine : MonoBehaviour
                     break;
                 case States.Dash:
                     playermovement.playerdashstate();
+                    break;
+                case States.Throwwhip:
+                    playerhook.displaywhip();
+                    playerhook.checkforwhipswitch();
                     break;
                 case States.Whip:
                     playerhook.displaywhip();

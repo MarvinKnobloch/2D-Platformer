@@ -20,7 +20,7 @@ public class Playerwhip
     private float waveSize = 0;
     private Vector3 whipdistance;
 
-    private float whipProgressionSpeed = 10;
+    private float whipProgressionSpeed = 11;
 
     float movetime = 0;
     private bool drawwhipwaves;
@@ -41,31 +41,29 @@ public class Playerwhip
             {
                 checkforclosesthook();
                 hookplayer();
+                activatelinerenderer();
 
                 addvelocity = true;
                 psm.inair = true;
                 Globalcalls.jumpcantriggerswitch = true;
                 psm.ChangeAnimationState(whipstartstate);
-                psm.playersounds.playwhip();
-                //psm.ChangeAnimationState(jumpnosoundstate);
-
-                psm.lineRenderer.positionCount = percision;
-                for (int i = 0; i < percision; i++)
-                {
-                    psm.lineRenderer.SetPosition(i, psm.whipstartpoint.position);
-                }
-                movetime = 0;
-                drawwhipwaves = true;
-                psm.lineRenderer.positionCount = percision;
-                waveSize = StartWaveSize;
-                psm.lineRenderer.enabled = true;
-                whipdistance = psm.hooktarget.transform.position - psm.whipstartpoint.position;
-                psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
-                psm.lineRenderer.SetPosition(1, psm.hooktarget.transform.position);
-
-                psm.state = Playerstatemachine.States.Whip;
+                psm.state = Playerstatemachine.States.Throwwhip;
             }
         }
+    }
+    private void activatelinerenderer()
+    {
+        psm.lineRenderer.positionCount = percision;
+        for (int i = 0; i < percision; i++)
+        {
+            psm.lineRenderer.SetPosition(i, psm.whipstartpoint.position);
+        }
+        movetime = 0;
+        drawwhipwaves = true;
+        psm.lineRenderer.positionCount = percision;
+        waveSize = StartWaveSize;
+        whipdistance = psm.hooktarget.transform.position - psm.whipstartpoint.position;
+        psm.lineRenderer.enabled = true;
     }
     private void hooktargetupdate()
     {
@@ -86,7 +84,7 @@ public class Playerwhip
                 float objectdistance;
                 for (int i = 0; i < Hookobject.hookobjects.Count; i++)
                 {
-                    Hookobject.hookobjects[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+                    Hookobject.hookobjects[i].GetComponent<SpriteRenderer>().color = Color.white;
                     objectdistance = Vector3.Distance(psm.transform.position, Hookobject.hookobjects[i].transform.position);
                     if (currentclosestdistance > objectdistance)
                     {
@@ -94,18 +92,18 @@ public class Playerwhip
                         psm.hooktarget = Hookobject.hookobjects[i];
                     }
                 }
-                psm.hooktarget.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.yellow;
+                psm.hooktarget.GetComponent<SpriteRenderer>().color = psm.whippointcolor;
             }
         }
         else
         {
-            psm.hooktarget = null;
+            if(psm.lineRenderer.enabled == false) psm.hooktarget = null;
         }
     }
     private void hookplayer()
     {
         Hookobject.hookobjects.Remove(psm.hooktarget);
-        psm.hooktarget.transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+        psm.hooktarget.GetComponent<SpriteRenderer>().color = Color.white;
         psm.inhookstate = true;
         psm.hookstartposition = psm.transform.position;
         psm.hookstarttime = 0;
@@ -259,12 +257,13 @@ public class Playerwhip
                 if (psm.rb.velocity.y < -1.5f) psm.ChangeAnimationState(jumpnosoundstate);
                 else psm.ChangeAnimationState(fallstate);
             }
+            if (psm.lineRenderer.positionCount != 2) { psm.lineRenderer.positionCount = 2; }
             psm.lineRenderer.enabled = false;
+            if (Hookobject.hookobjects.Count == 0) psm.hooktarget = null;
             psm.state = Playerstatemachine.States.Whiprelease;
         }
 
-
-        if (psm.hookstarttime > 0.5f)//0.1f + psm.flathookduration + (currentclosestdistance * psm.distancespeedmultiplier))
+        if (psm.hookstarttime > 0.5f)
         {
             psm.lineRenderer.enabled = false;
             psm.inhookstate = false;
@@ -316,13 +315,10 @@ public class Playerwhip
     {
         if (drawwhipwaves == true)
         {
-            if (psm.lineRenderer.GetPosition(percision - 1).x == psm.hooktarget.transform.position.x)
+            if(psm.hooktarget != null)
             {
-                drawwhipwaves = false;
-            }
-            else
-            {
-                finalwhipdisplay();
+                if (psm.lineRenderer.GetPosition(percision - 1).x == psm.hooktarget.transform.position.x) drawwhipwaves = false;
+                else finalwhipdisplay();
             }
         }
         else
@@ -335,9 +331,7 @@ public class Playerwhip
             else
             {
                 waveSize = 0;
-
                 if (psm.lineRenderer.positionCount != 2) { psm.lineRenderer.positionCount = 2; }
-
                 finalwhipdisplay();
             }
         }
@@ -361,6 +355,15 @@ public class Playerwhip
         {
             psm.lineRenderer.SetPosition(0, psm.whipstartpoint.position);
 
+        }
+    }
+    public void checkforwhipswitch()
+    {
+        Vector3 lastlinepoint = psm.lineRenderer.GetPosition(percision - 1);
+        if (Vector3.Distance(psm.hooktarget.transform.position, lastlinepoint) < 0.1f)
+        {
+            psm.playersounds.playwhip();
+            psm.state = Playerstatemachine.States.Whip;
         }
     }
 }

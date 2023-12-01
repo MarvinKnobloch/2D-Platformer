@@ -14,6 +14,8 @@ public class Menucontroller : MonoBehaviour
 
     public static event Action tutorialupdate;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
 
     private void Awake()
     {
@@ -35,6 +37,7 @@ public class Menucontroller : MonoBehaviour
             Time.fixedDeltaTime = 0f;
             menu.SetActive(true);
             menuoverview.SetActive(true);
+            menusoundcontroller.playmenusound1();
         }
         else if(controlls.Menu.Openmenu.WasPerformedThisFrame() && menuoverview.activeSelf == true && menu.activeSelf == true)     //menu.activeSelf == true weil menuoverview als aktiv gilt selbst wenn der parent disabled ist
         {
@@ -48,6 +51,7 @@ public class Menucontroller : MonoBehaviour
         Globalcalls.gameispaused = false;
         Time.timeScale = normaltimescale;
         Time.fixedDeltaTime = normalfixeddeltatime;
+        menusoundcontroller.playmenusound1();
         menu.SetActive(false);
         
     }

@@ -14,6 +14,8 @@ public class Handlebutton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Color selectedcolor;
     private Color notselectedcolor;
 
+    [SerializeField] private Menusoundcontroller menusoundcontroller;
+
 
     private void Awake()
     {
@@ -42,6 +44,7 @@ public class Handlebutton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         settingscontroller.SetActive(true);
         menuoverview.SetActive(false);
+        menusoundcontroller.playmenusound1();
     }
     public void closegame()
     {
