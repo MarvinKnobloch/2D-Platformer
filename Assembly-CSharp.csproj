@@ -97,6 +97,8 @@
     <Compile Include="Assets\Audio\Playersounds.cs" />
     <Compile Include="Assets\Audio\Musiccontroller.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Menu\Audioslider.cs" />
+    <Compile Include="Assets\Menu\Menusoundcontroller.cs" />
     <Compile Include="Assets\Menu\Settingcontroller.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Assetstore\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
@@ -159,8 +161,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Menu\KeyrebindUI.cs" />
-    <Compile Include="Assets\Menu\Audioslider.cs" />
-    <Compile Include="Assets\Menu\Menusoundcontroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
