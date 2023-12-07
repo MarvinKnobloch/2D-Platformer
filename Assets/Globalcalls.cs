@@ -11,11 +11,14 @@ public static class Globalcalls
     public static Vector3 playeresetpoint;
 
     public static GameObject boundscolliderobj;
-    public static int savecameradistance = 8;
+    public static int savecameradistance;
 
     public static int currentgravitystacks;
     public static int currentmemorystacks;
 
     public static bool candash = true;
+
+    public static int zonemusic;
+
 
 }
